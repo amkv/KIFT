@@ -1,0 +1,7 @@
+*.o
+kift
+bla
+client
+server
+*.a
+cmake-build-debug/
