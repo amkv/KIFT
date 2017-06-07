@@ -21,6 +21,7 @@ SRCF = src/
 PRJSHARED = $(SRCF)project/shared_src
 PRJCLIENT = $(SRCF)project/client_src
 PRJSERVER = $(SRCF)project/server_src
+DMOD = "-DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config --cflags --libs pocketsphinx sphinxbase`"
 
 RMF = /bin/rm -rf
 CC = /usr/bin/gcc
@@ -50,7 +51,7 @@ $(NAME0):
 
 $(NAME1):
 	@echo "$(NAME1) compiling... \c"
-	@$(CC) $(FLAGS) $(CFILES1) -c
+	@$(CC) $(FLAGS) $(CFILES1)  -c
 	@mv $(OFILES1) $(PRJCLIENT)/
 	@$(CC) $(FLAGS) $(PRJCLIENT)/$(OFILES1) $(LIB) $(SLIB) -o $(NAME1)
 	@echo "$(GRN)created$(CLN)"
@@ -59,7 +60,7 @@ $(NAME2):
 	@echo "$(NAME2) compiling... \c"
 	@$(CC) $(FLAGS) $(CFILES2) -c
 	@mv $(OFILES2) $(PRJSERVER)/
-	@$(CC) $(FLAGS) $(PRJSERVER)/$(OFILES2) $(LIB) $(SLIB) -o $(NAME2)
+	@$(CC) $(FLAGS) $(PRJSERVER)/$(OFILES2) $(LIB) $(SLIB) $(DMOD) -o $(NAME2)
 	@echo "$(GRN)created$(CLN)"
 
 clean:
@@ -81,4 +82,3 @@ fclean:
 	@echo "$(WHT)fcleaned$(CLN)"
 
 re: fclean all
-

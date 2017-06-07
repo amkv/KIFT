@@ -14,6 +14,9 @@
 
 void			ft_debug(char *message)
 {
-	if (DEBUG)
-		ft_printf(message);
+	static int i = 0;
+
+	if (!DEBUG)
+		return ;
+	ft_printf("[%d] %s\n", ++i, message);
 }

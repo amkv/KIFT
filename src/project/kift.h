@@ -13,6 +13,7 @@
 #ifndef KIFT_H
 # define KIFT_H
 # include "../lib/libft/libft.h"
+# include <pocketsphinx.h>
 
 typedef enum	e_bool
 {

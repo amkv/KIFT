@@ -19,8 +19,17 @@ set (SOURCE_FILES
 		#src/project/shared_src/ft_debug.c
 )
 
+#FIND_LIBRARY(POCKETSPHINX_LIBRARY pocketsphinx)
+#FIND_LIBRARY(BASESPHINX_LIBRARY sphinxbase)
+#MARK_AS_ADVANCED(${POCKETSPHINX_LIBRARY} ${BASESPHINX_LIBRARY})
+#SET(EXTRA_LIBS ${POCKETSPHINX_LIBRARY} ${BASESPHINX_LIBRARY})
+
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 target_link_libraries(
 		${PROJECT_NAME}
+#		${EXTRA_LIBS}
 		${CMAKE_CURRENT_SOURCE_DIR}/src/lib/libft.a
+#		${CMAKE_CURRENT_SOURCE_DIR}/src/pocketsphinx/lib/libpocketsphinx.a
+#		${CMAKE_CURRENT_SOURCE_DIR}/src/sphinxbase/lib/libsphinxbase.a
+
 )
