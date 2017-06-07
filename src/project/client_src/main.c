@@ -14,7 +14,7 @@
 
 //int				main(void)
 //{
-//	ft_debug("main function");
+//
 //	return (0);
 //}
 
@@ -24,11 +24,16 @@ main(int argc, char *argv[])
 	ps_decoder_t *ps = NULL;
 	cmd_ln_t *config = NULL;
 
-	config = cmd_ln_init(NULL, ps_args(), True,
+	ft_debug("main function");
+	config = cmd_ln_init(NULL, ps_args(), TRUE,
 						 "-hmm", MODELDIR "/en-us/en-us",
 			"-lm", MODELDIR "/en-us/en-us.lm.bin",
 			"-dict", MODELDIR "/en-us/cmudict-en-us.dict",
 			NULL);
 
+	if (argc > 1)
+		ft_printf("%s\n", argv[1]);
+	ft_printf("test_bla\n");
+	ps = NULL;
 	return 0;
 }

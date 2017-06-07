@@ -15,13 +15,32 @@
 # include "../lib/libft/libft.h"
 # include <pocketsphinx.h>
 
+# define DEBUG	True
+
 typedef enum	e_bool
 {
 	False,
 	True
 }				t_bool;
 
-#define DEBUG	True
+
+/*
+** Client (bla) functions
+*/
+
+
+
+
+/*
+** Server functions
+*/
+
+
+
+
+/*
+** Shared function
+*/
 
 void					ft_debug(char *message);
 

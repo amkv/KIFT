@@ -21,7 +21,8 @@ SRCF = src/
 PRJSHARED = $(SRCF)project/shared_src
 PRJCLIENT = $(SRCF)project/client_src
 PRJSERVER = $(SRCF)project/server_src
-DMOD = "-DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config --cflags --libs pocketsphinx sphinxbase`"
+DMOD = -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config --cflags pocketsphinx sphinxbase`
+DMOD2 = `pkg-config --libs pocketsphinx sphinxbase`
 
 RMF = /bin/rm -rf
 CC = /usr/bin/gcc
@@ -51,16 +52,16 @@ $(NAME0):
 
 $(NAME1):
 	@echo "$(NAME1) compiling... \c"
-	@$(CC) $(FLAGS) $(CFILES1)  -c
+	@$(CC) $(CFILES1) $(FLAGS) $(DMOD) -c
 	@mv $(OFILES1) $(PRJCLIENT)/
-	@$(CC) $(FLAGS) $(PRJCLIENT)/$(OFILES1) $(LIB) $(SLIB) -o $(NAME1)
+	@$(CC) -o $(NAME1) $(LIB) $(SLIB) $(PRJCLIENT)/$(OFILES1) $(DMOD2)
 	@echo "$(GRN)created$(CLN)"
 
 $(NAME2):
 	@echo "$(NAME2) compiling... \c"
-	@$(CC) $(FLAGS) $(CFILES2) -c
+	@$(CC) $(CFILES2) $(FLAGS) $(DMOD) -c
 	@mv $(OFILES2) $(PRJSERVER)/
-	@$(CC) $(FLAGS) $(PRJSERVER)/$(OFILES2) $(LIB) $(SLIB) $(DMOD) -o $(NAME2)
+	@$(CC) -o $(NAME2) $(LIB) $(SLIB) $(PRJSERVER)/$(OFILES2) $(DMOD2)
 	@echo "$(GRN)created$(CLN)"
 
 clean:

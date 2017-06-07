@@ -16,7 +16,8 @@ NAME = shared.a
 
 CFILES = $(shell find . -name "*.c")
 OFILES = $(CFILES:%.c=%.o)
-DMOD = "-DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config --cflags --libs pocketsphinx sphinxbase`"
+DMOD = -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config --cflags pocketsphinx sphinxbase`
+DMOD2 = `pkg-config --libs pocketsphinx sphinxbase`
 
 RMF = /bin/rm -rf
 CC = /usr/bin/gcc
@@ -30,8 +31,8 @@ all: $(NAME)
 
 $(NAME):
 	@echo "$(NAME) compiling... \c"
-	@$(CC) $(FLAGS) $(CFILES) -c
-	@ar rc $(NAME) $(OFILES) $(DMOD)
+	@$(CC) $(FLAGS) $(DMOD) $(CFILES) -c
+	@ar rc $(NAME) $(OFILES)
 	@ranlib $(NAME)
 	@echo "$(GRN)created$(CLN)"
 
