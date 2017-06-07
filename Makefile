@@ -21,7 +21,8 @@ SRCF = src/
 PRJSHARED = $(SRCF)project/shared_src
 PRJCLIENT = $(SRCF)project/client_src
 PRJSERVER = $(SRCF)project/server_src
-DMOD = -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config --cflags pocketsphinx sphinxbase`
+DMOD = -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config \
+--cflags pocketsphinx sphinxbase`
 DMOD2 = `pkg-config --libs pocketsphinx sphinxbase`
 
 RMF = /bin/rm -rf

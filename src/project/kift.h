@@ -12,8 +12,11 @@
 
 #ifndef KIFT_H
 # define KIFT_H
+# define MODELDIR "src/pocketsphinx/share/pocketsphinx/model"
 # include "../lib/libft/libft.h"
 # include <pocketsphinx.h>
+
+
 
 # define DEBUG	True
 

@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.6)
 project(kift)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -Wall -Wextra -Werror")
+#-DMODELDIR=${CMAKE_CURRENT_SOURCE_DIR}/src/pocketsphinx/share/pocketsphinx/model
 #set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
 
 #file (GLOB SOURCE_FILES
@@ -10,16 +11,24 @@ set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -Wall -Wextra -Werror")
 #		${CMAKE_CURRENT_SOURCE_DIR}/src/project/shared_src/*.c
 #		)
 
+INCLUDE_DIRECTORIES(${CMAKE_CURRENT_SOURCE_DIR}/src/pocketsphinx/include
+					${CMAKE_CURRENT_SOURCE_DIR}/src/pocketsphinx/include/sphinxbase
+					${CMAKE_CURRENT_SOURCE_DIR}/src/pocketsphinx/include/pocketsphinx
+					${CMAKE_CURRENT_SOURCE_DIR}/src/sphinxbase/include
+					${CMAKE_CURRENT_SOURCE_DIR}/src/sphinxbase/include/sphinxbase)
+LINK_DIRECTORIES(	${CMAKE_CURRENT_SOURCE_DIR}/src/pocketsphinx/lib
+					${CMAKE_CURRENT_SOURCE_DIR}/src/sphinxbase/lib)
+
 set (SOURCE_FILES
-		src/project/client_src/main.c
-		src/project/shared_src/ft_debug.c
+					src/project/client_src/main.c
+					src/project/shared_src/ft_debug.c
 
-		#src/project/server_src/main.c
+					#src/project/server_src/main.c
 
-		#src/project/shared_src/ft_debug.c
+					#src/project/shared_src/ft_debug.c
 )
 
-#FIND_LIBRARY(POCKETSPHINX_LIBRARY pocketsphinx)
+FIND_LIBRARY(EXTRA_LIBRARY pocketsphinx sphinxbase sphinxad pthread m blas lapack)
 #FIND_LIBRARY(BASESPHINX_LIBRARY sphinxbase)
 #MARK_AS_ADVANCED(${POCKETSPHINX_LIBRARY} ${BASESPHINX_LIBRARY})
 #SET(EXTRA_LIBS ${POCKETSPHINX_LIBRARY} ${BASESPHINX_LIBRARY})
@@ -27,9 +36,15 @@ set (SOURCE_FILES
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 target_link_libraries(
 		${PROJECT_NAME}
-#		${EXTRA_LIBS}
+		${EXTRA_LIBS}
 		${CMAKE_CURRENT_SOURCE_DIR}/src/lib/libft.a
-#		${CMAKE_CURRENT_SOURCE_DIR}/src/pocketsphinx/lib/libpocketsphinx.a
-#		${CMAKE_CURRENT_SOURCE_DIR}/src/sphinxbase/lib/libsphinxbase.a
-
+#		pocketsphinx
+#		sphinxbase
+#		sphinxad
+#		pthread
+#		m
+#		blas
+#		lapack
+		${CMAKE_CURRENT_SOURCE_DIR}/src/pocketsphinx/lib/libpocketsphinx.a
+		${CMAKE_CURRENT_SOURCE_DIR}/src/sphinxbase/lib/libsphinxbase.a
 )

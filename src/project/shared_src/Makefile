@@ -16,7 +16,8 @@ NAME = shared.a
 
 CFILES = $(shell find . -name "*.c")
 OFILES = $(CFILES:%.c=%.o)
-DMOD = -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config --cflags pocketsphinx sphinxbase`
+DMOD = -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config \
+--cflags pocketsphinx sphinxbase`
 DMOD2 = `pkg-config --libs pocketsphinx sphinxbase`
 
 RMF = /bin/rm -rf
