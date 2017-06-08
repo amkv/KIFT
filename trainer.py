@@ -17,19 +17,23 @@ def create_folder(name):
         print('folder %(name)s already exist' % {'name' : name})
 
 def create_file(path, name):
-    print path + name
     try:
-        new_file = open(path + name, 'w')
+        new_file = open(path + name, 'a')
+        print('file %(path)s%(name)s opened' % {'path' : path, 'name' : name})
     except:
         print('can\'t create %(path)s%(name)s' % {'name' : name, 'path' : path})
         sys.exit(0)
-    return new_file
+    new_file.close()
 
-def append_to_transcription(file, text, wavname):
+def append_to_transcription(path, transcription, text, wavname):
+    file = open(path + transcription, 'a')
     file.write('<s> %(text)s </s> (%(wavname)s)\n' % {'text' : text, 'wavname' : wavname})
+    file.close()
 
-def append_to_fileids(file, wavname):
+def append_to_fileids(path, fileids, wavname):
+    file = open(path + fileids, 'a')
     file.write('%(wavname)s\n' % {'wavname' : wavname})
+    file.close()
 
 def set_wavname(text, counter):
     wavname = text.replace(' ', '_')
@@ -45,7 +49,28 @@ def new_voice(path, wavname):
         print('can\'t create %(path)s%(name)s' % {'wavname' : wavname, 'path' : path})
         sys.exit(0)
 
+def set_counter(path, fileids):
+    counter = 0
+    file = open(path + fileids, 'rb')
+    lines = file.readlines()
+    if lines:
+        last = lines[-1].split('_')
+        counter = int(last[0])
+    return counter
+
+def close_file(transcription_file, fileids_file):
+    close(transcription_file)
+    close(fileids_file)
+
+def get_last_text(path, transcription):
+    file = open(path + transcription, 'rb')
+    lines = file.readlines()
+    if lines:
+        last = lines[-1].partition('<s> ')[-1].rpartition(' </s>')[0]
+    return last
+
 def main():
+    os.system('clear')
     folder = 'train'
     path = folder + '/'
     transcription = 'text.transcription'
@@ -53,41 +78,25 @@ def main():
     print('trainer v0.1')
     print('-----------------------------------------')
     create_folder(folder)
-    transcription_file = create_file(path, transcription)
-    fileids_file = create_file(path, fileids)
-
-    counter = 0
+    create_file(path, transcription)
+    create_file(path, fileids)
+    counter = set_counter(path, fileids)
     while True:
         text = raw_input('>')
-        if len(text) < 1:
-            continue
         counter += 1
+        if len(text) < 1:
+            text = get_last_text(path, transcription)
+        if '!' in text:
+            sys.exit(0)
+            print('ok, exit')
+        os.system('clear')
+        print('----------------------------------------\n\n')
+        print (text + '\n\n')
+        print('----------------------------------------\n')
         wavname = set_wavname(text, counter)
-        append_to_transcription(transcription_file, text, wavname)
-        append_to_fileids(fileids_file, wavname)
+        append_to_transcription(path, transcription, text, wavname)
+        append_to_fileids(path, fileids, wavname)
         new_voice(path, wavname)
 
 if __name__ == "__main__":
     main()
-
-    # text = None
-    # holder = None
-    # while True:
-    #     if text == None:
-    #         text = raw_input('>')
-    #     else:
-    #         holder = text
-    #         text = raw_input('>')
-    #     if '!' in text:
-    #         print('end of training')
-    #         sys.exit(0)
-    #     elif '#' in text:
-    #         print('ok, new text')
-    #         text = raw_input('input new text:')
-    #         holder = None
-    #     else:
-    #         if holder != None:
-    #             print(holder)
-    #         else:
-    #             print('empty holder')
-    #         print('continue training with')
