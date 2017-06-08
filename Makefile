@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re libft s c
 
 NAME0 = shared.a
 NAME1 = bla
@@ -21,8 +21,7 @@ SRCF = src/
 PRJSHARED = $(SRCF)project/shared_src
 PRJCLIENT = $(SRCF)project/client_src
 PRJSERVER = $(SRCF)project/server_src
-DMOD = -DMODELDIR=\"`pkg-config --variable=modeldir pocketsphinx`\" `pkg-config \
---cflags pocketsphinx sphinxbase`
+DMOD =  `pkg-config --cflags pocketsphinx sphinxbase`
 DMOD2 = `pkg-config --libs pocketsphinx sphinxbase`
 
 RMF = /bin/rm -rf
@@ -43,15 +42,21 @@ RED = \033[1;31m
 WHT = \033[1;37m
 CLN = \033[m
 
-all: libft $(NAME0) $(NAME1) $(NAME2)
+all: $(NAME1) $(NAME2)
 
 libft:
-	@make -C $(LIBFT)
+	@if [ ! -e $(LIB) ]; then \
+		make -C $(LIBFT); \
+	fi
 
 $(NAME0):
-	@make -C $(PRJSHARED)
+	@make libft
+	@if [ ! -e $(SLIB) ]; then \
+    	make -C $(PRJSHARED); \
+    fi
 
 $(NAME1):
+	@make $(NAME0)
 	@echo "$(NAME1) compiling... \c"
 	@$(CC) $(CFILES1) $(FLAGS) $(DMOD) -c
 	@mv $(OFILES1) $(PRJCLIENT)/
@@ -59,6 +64,7 @@ $(NAME1):
 	@echo "$(GRN)created$(CLN)"
 
 $(NAME2):
+	@make $(NAME0)
 	@echo "$(NAME2) compiling... \c"
 	@$(CC) $(CFILES2) $(FLAGS) $(DMOD) -c
 	@mv $(OFILES2) $(PRJSERVER)/
@@ -82,5 +88,17 @@ fclean:
 	@$(RMF) $(NAME1)
 	@$(RMF) $(NAME2)
 	@echo "$(WHT)fcleaned$(CLN)"
+
+c:
+	@$(RMF) $(PRJCLIENT)/$(OFILES1)
+	@$(RMF) $(NAME1)
+	@make $(NAME1)
+	@echo "$(WHT)done$(CLN)"
+
+s:
+	@$(RMF) $(PRJSERVER)/$(OFILES2)
+	@$(RMF) $(NAME2)
+	@make $(NAME2)
+	@echo "$(WHT)done$(CLN)"
 
 re: fclean all

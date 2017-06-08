@@ -31,7 +31,6 @@ set (SOURCE_FILES
 add_executable(${PROJECT_NAME} ${SOURCE_FILES})
 target_link_libraries(
 		${PROJECT_NAME}
-		${EXTRA_LIBS}
 		${CMAKE_CURRENT_SOURCE_DIR}/src/lib/libft.a
 		${CMAKE_CURRENT_SOURCE_DIR}/src/pocketsphinx/lib/libpocketsphinx.a
 		${CMAKE_CURRENT_SOURCE_DIR}/src/sphinxbase/lib/libsphinxbase.a

@@ -15,8 +15,7 @@
 # define MODELDIR "src/pocketsphinx/share/pocketsphinx/model"
 # include "../lib/libft/libft.h"
 # include <pocketsphinx.h>
-
-
+# pragma GCC diagnostic ignored "-Wunused-variable"
 
 # define DEBUG	True
 
