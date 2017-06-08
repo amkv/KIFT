@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
 	if (config == NULL) {
 		fprintf(stderr, "Failed to create config object, see log for  details\n");
 		return -1;
+		
 	}
 
 	ps = ps_init(config);
