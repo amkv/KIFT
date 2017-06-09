@@ -12,64 +12,65 @@
 
 #include "../kift.h"
 
-int main(int argc, char *argv[])
+static void			ft_error_exit(char *message)
 {
-	if (argc != 2)
-	{
-		ft_printf("bad input\n");
-		exit(0);
-	}
+	if (DEBUG)
+		ft_printf("%s\n", message);
+	exit(EXIT_FAILURE);
+}
 
-	ps_decoder_t *ps;
-	cmd_ln_t *config;
-	FILE *fh;
-	char const *hyp, *uttid;
-	int16 buf[512];
-	int rv;
-	int32 score;
-
-//	-inmic yes -hmm  model\en-us\en-us -lm model\en-us\en-us.lm.bin -dict  model\en-us\cmudict-en-us.dict
+static cmd_ln_t		*ft_cmd_ln_init(void)
+{
+	cmd_ln_t		*config;
 
 	config = cmd_ln_init(NULL, ps_args(), TRUE,
-						 "-hmm", MODELDIR "/en-us/en-us",
-						 "-lm", MODELDIR "/en-us/en-us.lm.bin",
-						 "-dict", MODELDIR "/en-us/cmudict-en-us.dict",
-						 NULL);
-	if (config == NULL) {
-		fprintf(stderr, "Failed to create config object, see log for  details\n");
-		return -1;
-		
-	}
+						"-hmm", MODELDIR "/en-us/en-us",
+						"-lm", MODELDIR "/en-us/en-us.lm.bin",
+						"-dict", MODELDIR "/en-us/cmudict-en-us.dict",
+						NULL);
+	if (!config)
+		ft_error_exit("Failed to create config object");
+	return (config);
+}
 
-	ps = ps_init(config);
-	if (ps == NULL) {
-		fprintf(stderr, "Failed to create recognizer, see log for  details\n");
-		return -1;
-	}
+static void			ft_read_wav(char *argv, ps_decoder_t **ps)
+{
+	int				rv;
+	FILE			*fh;
+	int16			buf[512];
+	size_t			nsamp;
 
-	fh = fopen(argv[1], "rb");
-	if (fh == NULL) {
-		fprintf(stderr, "Unable to open input file goforward.raw\n");
-		return -1;
-	}
-
-	rv = ps_start_utt(ps);
-
-	while (!feof(fh)) {
-		size_t nsamp;
+	fh = fopen(argv, "rb");
+	if (!fh)
+		ft_error_exit("Unable to open input file");
+	rv = ps_start_utt(*ps);
+	while (!feof(fh))
+	{
 		nsamp = fread(buf, 2, 512, fh);
-		rv = ps_process_raw(ps, buf, nsamp, FALSE, FALSE);
+		rv = ps_process_raw(*ps, buf, nsamp, FALSE, FALSE);
 	}
-
-	rv = ps_end_utt(ps);
-	hyp = ps_get_hyp(ps, &score);
-	printf("Recognized: %s\n", hyp);
-
+	rv = ps_end_utt(*ps);
 	fclose(fh);
+}
+
+int					main(int argc, char **argv)
+{
+	ps_decoder_t	*ps;
+	cmd_ln_t		*config;
+	char const		*hyp;
+	int32			score;
+
+	if (argc != 2)
+		exit(EXIT_FAILURE);
+	err_set_logfp(NULL);
+	err_set_debug_level(SPHINX_DEBUG_DISABLED);
+	config = ft_cmd_ln_init();
+	if (!(ps = ps_init(config)))
+		ft_error_exit("Failed to create recognizer");
+	ft_read_wav(argv[1], &ps);
+	hyp = ps_get_hyp(ps, &score);
+	ft_printf("%s\n", hyp);
 	ps_free(ps);
 	cmd_ln_free_r(config);
-
-
-	ft_printf("test_bla\n");
-	return 0;
+	return (EXIT_SUCCESS);
 }

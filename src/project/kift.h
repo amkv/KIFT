@@ -15,9 +15,13 @@
 # define MODELDIR "src/pocketsphinx/share/pocketsphinx/model"
 # include "../lib/libft/libft.h"
 # include <pocketsphinx.h>
+# include <err.h>
 # pragma GCC diagnostic ignored "-Wunused-variable"
 
+# define EXIT_SUCCESS 0
+
 # define DEBUG	True
+# define SPHINX_DEBUG_DISABLED 0
 
 typedef enum	e_bool
 {
