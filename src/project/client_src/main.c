@@ -12,6 +12,8 @@
 
 #include "../kift.h"
 
+// проверка на wav file
+
 static void			ft_error_exit(char *message)
 {
 	if (DEBUG)
@@ -24,9 +26,9 @@ static cmd_ln_t		*ft_cmd_ln_init(void)
 	cmd_ln_t		*config;
 
 	config = cmd_ln_init(NULL, ps_args(), TRUE,
-						"-hmm", MODELDIR "/en-us/en-us",
-						"-lm", MODELDIR "/en-us/en-us.lm.bin",
-						"-dict", MODELDIR "/en-us/cmudict-en-us.dict",
+						"-hmm", MODELDIR "en-us-adapt",
+						"-lm", MODELDIR "en-us.lm.bin",
+						"-dict", MODELDIR "cmudict-en-us.dict",
 						NULL);
 	if (!config)
 		ft_error_exit("Failed to create config object");

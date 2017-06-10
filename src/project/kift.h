@@ -12,14 +12,13 @@
 
 #ifndef KIFT_H
 # define KIFT_H
-# define MODELDIR "src/pocketsphinx/share/pocketsphinx/model"
+# define MODELDIR "model/"
 # include "../lib/libft/libft.h"
 # include <pocketsphinx.h>
 # include <err.h>
-# pragma GCC diagnostic ignored "-Wunused-variable"
+# pragma GCC diagnostic ignored "-Wunused-variable" /* delete */
 
 # define EXIT_SUCCESS 0
-
 # define DEBUG	True
 # define SPHINX_DEBUG_DISABLED 0
 
