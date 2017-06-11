@@ -76,6 +76,18 @@ def upload_file():
 def upload():
     return render_template("upload.html")
 
+@app.route('/submit', methods=['GET', 'POST'])
+def submit():
+      # Open file and write binary (blob) data
+      f = open('./file.wav', 'wb')
+      f.write(request.data)
+      f.close()
+    #   Tweak to get the file .wav with the good header. Need to find a fix
+      os.system('ffmpeg -y -i file.wav -f s16le -acodec pcm_s16le output.pcm')
+      os.system('ffmpeg -y -f s16le -ar 44.1k -ac 1 -i output.pcm file_FIXED.wav')
+
+      return "Binary message written!"
+
 if __name__ == '__main__':
     if len(sys.argv) != 2:
         print_usage()

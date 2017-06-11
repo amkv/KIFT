@@ -65,12 +65,27 @@ if (navigator.getUserMedia) {
     mediaRecorder.onstop = function(e) {
       console.log("data available after MediaRecorder.stop() called.");
 
-      var clipName = prompt('Enter a name for your sound clip?','My unnamed clip');
-      console.log(clipName);
+      var clipName = "Audio File";
+      // console.log(clipName);
       var clipContainer = document.createElement('article');
       var clipLabel = document.createElement('p');
       var audio = document.createElement('audio');
+      var audio2upload = document.createElement('input');
       var deleteButton = document.createElement('button');
+
+      // Create form that will be sent
+      var upload_form = document.createElement('form');
+      upload_form.setAttribute('method','post');
+      upload_form.setAttribute('action',"http://127.0.0.1:8081/submit");
+
+      var submit = document.createElement("input"); //input element, Submit button
+      submit.setAttribute('type',"submit");
+      submit.setAttribute('value',"Submit");
+      // audio2upload.setAttribute('controls', '');
+
+      upload_form.appendChild(audio2upload);
+      upload_form.appendChild(submit);
+      // End form
 
       clipContainer.classList.add('clip');
       audio.setAttribute('controls', '');
@@ -86,15 +101,15 @@ if (navigator.getUserMedia) {
       clipContainer.appendChild(audio);
       clipContainer.appendChild(clipLabel);
       clipContainer.appendChild(deleteButton);
+      clipContainer.appendChild(upload_form);
       soundClips.appendChild(clipContainer);
 
       audio.controls = true;
-      console.log(chunks);
-      var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+      var blob = new Blob(chunks, {'type': 'audio/wav;'});
       chunks = [];
-      console.log(chunks);
       var audioURL = window.URL.createObjectURL(blob);
       audio.src = audioURL;
+      audio2upload.value = audioURL;
       console.log("recorder stopped");
 
       deleteButton.onclick = function(e) {
@@ -102,15 +117,9 @@ if (navigator.getUserMedia) {
         evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
       }
 
-      clipLabel.onclick = function() {
-        var existingName = clipLabel.textContent;
-        var newClipName = prompt('Enter a new name for your sound clip?');
-        if(newClipName === null) {
-          clipLabel.textContent = existingName;
-        } else {
-          clipLabel.textContent = newClipName;
-        }
-      }
+      // When everything is done, send the file to the server
+      sendAudio(blob);
+
     }
     // The MediaRecorder.ondataavailable event handler (part of the MediaStream
     // Recording API) handles the dataavailable event, letting you run code in
@@ -128,6 +137,29 @@ if (navigator.getUserMedia) {
 } else {
    console.log('getUserMedia not supported on your browser!');
 }
+
+
+// Function to sendAudio
+function sendAudio(blob) {
+    fetch("http://127.0.0.1:8081/submit", {
+    method: "post",
+    body: blob
+    });
+  console.log("end_fetch");
+
+//   return ;
+//   var formData = new FormData();
+//   formData.append('fileName', 'Upload');
+//   formData.append('data', blob);
+//   console.log("fomrData in sendAudio fn");
+//   // console.log(formData);
+//   for (var pair of formData.entries()) {
+//     console.log(pair[0]+ ', ' + pair[1]);
+// }
+}
+
+
+
 
 function visualize(stream) {
   var source = audioCtx.createMediaStreamSource(stream);
