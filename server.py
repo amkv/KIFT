@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, render_template
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
 import shutil
@@ -71,6 +71,10 @@ def upload_file():
          <input type=submit value=Upload>
     </form>
     '''
+
+@app.route('/upload')
+def upload():
+    return render_template("upload.html")
 
 if __name__ == '__main__':
     if len(sys.argv) != 2:
