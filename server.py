@@ -11,6 +11,8 @@ import os
 import json
 # from flask.ext.jsonpify import jsonify
 
+import wave
+
 app = Flask(__name__)
 api = Api(app)
 PATH = os.getcwd() + '/'
@@ -47,29 +49,34 @@ def handler(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
-    if request.method == 'POST':
-        # check if the post request has the file part
-        if 'file' not in request.files:
-            flash('No file part')
-            return redirect(request.url)
-        file = request.files['file']
-        # if user does not select file, browser also
-        # submit a empty part without filename
-        if file.filename == '':
-            flash('No selected file')
-            return redirect(request.url)
-        if file and allowed_file(file.filename):
-            filename = secure_filename(file.filename)
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return handler(filename)
+    # if request.method == 'POST':
+    #     # check if the post request has the file part
+    #     if 'file' not in request.files:
+    #         flash('No file part')
+    #         return redirect(request.url)
+    #     file = request.files['file']
+    #     # if user does not select file, browser also
+    #     # submit a empty part without filename
+    #     if file.filename == '':
+    #         flash('No selected file')
+    #         return redirect(request.url)
+    #     if file and allowed_file(file.filename):
+    #         filename = secure_filename(file.filename)
+    #         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+    #         return handler(filename)
+    # return '''
+    # <!doctype html>
+    # <title>KIFT server side</title>
+    # <h1>Upload wav file</h1>
+    # <form method=post enctype=multipart/form-data>
+    #   <p><input type=file name=file>
+    #      <input type=submit value=Upload>
+    # </form>
+    # '''
     return '''
     <!doctype html>
     <title>KIFT server side</title>
-    <h1>Upload wav file</h1>
-    <form method=post enctype=multipart/form-data>
-      <p><input type=file name=file>
-         <input type=submit value=Upload>
-    </form>
+    <h1>server side</h1>
     '''
 
 @app.route('/upload')
@@ -79,13 +86,15 @@ def upload():
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
       # Open file and write binary (blob) data
-      f = open('./file.wav', 'wb')
+      f = open('./commands_log/command_.wav', 'wb')
       f.write(request.data)
       f.close()
     #   Tweak to get the file .wav with the good header. Need to find a fix
-      os.system('ffmpeg -y -i file.wav -f s16le -acodec pcm_s16le output.pcm')
-      os.system('ffmpeg -y -f s16le -ar 44.1k -ac 1 -i output.pcm file_FIXED.wav')
-
+      os.system('ffmpeg -y -i ./commands_log/command_.wav -f s16le -acodec pcm_s16le ./commands_log/output.pcm')
+      os.system('ffmpeg -y -f s16le -ar 44.1k -ac 1 -i ./commands_log/output.pcm ./commands_log/command_.wav')
+    #   text = os.system('./bla ./commands_log/command_.wav')
+    #   print(text)
+    #   return(text)
       return "Binary message written!"
 
 if __name__ == '__main__':
