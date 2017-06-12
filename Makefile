@@ -10,95 +10,53 @@
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re libft s c
+.PHONY: all clean fclean re c
 
-NAME0 = shared.a
-NAME1 = bla
-NAME2 = server
-
+NAME = bla
 SRCF = src/
+SERVER = $(SRCF)server_src/
 
-PRJSHARED = $(SRCF)project/shared_src
-PRJCLIENT = $(SRCF)project/client_src
-PRJSERVER = $(SRCF)project/server_src
+PRJBLA = $(SRCF)bla_src
 DMOD =  `pkg-config --cflags pocketsphinx sphinxbase`
 DMOD2 = `pkg-config --libs pocketsphinx sphinxbase`
 
 RMF = /bin/rm -rf
 CC = /usr/bin/gcc
-LIBFT = $(SRCF)lib/
-LIB = $(LIBFT)libft.a
-SLIB = $(PRJSHARED)/$(NAME0)
 FLAGS = -Wall -Wextra -Werror
 
-CFILES1 = $(shell find $(PRJCLIENT) -name "*.c")
-OFILES1 = $(CFILES1:$(PRJCLIENT)/%.c=%.o)
-
-CFILES2 = $(shell find $(PRJSERVER) -name "*.c")
-OFILES2 = $(CFILES2:$(PRJSERVER)/%.c=%.o)
+CFILES = $(shell find $(PRJBLA) -name "*.c")
+OFILES = $(CFILES:$(PRJBLA)/%.c=%.o)
 
 GRN = \033[1;32m
 RED = \033[1;31m
 WHT = \033[1;37m
 CLN = \033[m
 
-all: $(NAME1) $(NAME2)
+all: $(NAME)
 
-libft:
-	@if [ ! -e $(LIB) ]; then \
-		make -C $(LIBFT); \
-	fi
-
-$(NAME0):
-	@make libft
-	@if [ ! -e $(SLIB) ]; then \
-    	make -C $(PRJSHARED); \
-    fi
-
-$(NAME1):
-	@make $(NAME0)
-	@echo "$(NAME1) compiling... \c"
-	@$(CC) $(CFILES1) $(FLAGS) $(DMOD) -c
-	@mv $(OFILES1) $(PRJCLIENT)/
-	@$(CC) -o $(NAME1) $(LIB) $(SLIB) $(PRJCLIENT)/$(OFILES1) $(DMOD2)
-	@echo "$(GRN)created$(CLN)"
-
-$(NAME2):
-	@make $(NAME0)
-	@echo "$(NAME2) compiling... \c"
-	@$(CC) $(CFILES2) $(FLAGS) $(DMOD) -c
-	@mv $(OFILES2) $(PRJSERVER)/
-	@$(CC) -o $(NAME2) $(LIB) $(SLIB) $(PRJSERVER)/$(OFILES2) $(DMOD2)
+$(NAME):
+	@echo "$(NAME) compiling... \c"
+	@$(CC) $(CFILES) $(FLAGS) $(DMOD) -c
+	@mv $(OFILES) $(PRJBLA)/
+	@$(CC) -o $(NAME) $(PRJBLA)/$(OFILES) $(DMOD2)
+	@mv $(NAME) $(SERVER)/
 	@echo "$(GRN)created$(CLN)"
 
 clean:
-	@make -C $(LIBFT) clean
-	@make -C $(PRJSHARED) clean
 	@echo "cleaning... \c"
-	@$(RMF) $(PRJCLIENT)/$(OFILES1)
-	@$(RMF) $(PRJSERVER)/$(OFILES2)
+	@$(RMF) $(PRJBLA)/$(OFILES)
 	@echo "$(WHT)cleaned$(CLN)"
 
 fclean:
-	@make -C $(LIBFT) fclean
-	@make -C $(PRJSHARED) fclean
 	@echo "fcleaning... \c"
-	@$(RMF) $(PRJCLIENT)/$(OFILES1)
-	@$(RMF) $(PRJSERVER)/$(OFILES2)
-	@$(RMF) $(NAME1)
-	@$(RMF) $(NAME2)
+	@$(RMF) $(PRJBLA)/$(OFILES)
+	@$(RMF) $(SERVER)/$(NAME)
 	@echo "$(WHT)fcleaned$(CLN)"
 
 c:
-	@$(RMF) $(PRJCLIENT)/$(OFILES1)
-	@$(RMF) $(NAME1)
-	@make $(NAME1)
-	@echo "$(WHT)done$(CLN)"
-
-s:
-	@$(RMF) $(PRJSERVER)/$(OFILES2)
-	@$(RMF) $(NAME2)
-	@make $(NAME2)
-	@echo "$(WHT)done$(CLN)"
+	# @$(RMF) $(PRJBLA)/$(OFILES)
+	# @$(RMF) $(NAME)
+	# @make $(NAME)
+	# @echo "$(WHT)done$(CLN)"
 
 re: fclean all
