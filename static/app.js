@@ -65,57 +65,61 @@ if (navigator.getUserMedia) {
     mediaRecorder.onstop = function(e) {
       console.log("data available after MediaRecorder.stop() called.");
 
-      var clipName = "Audio File";
+      // var clipName = "Audio File";
       // console.log(clipName);
       var clipContainer = document.createElement('article');
-      var clipLabel = document.createElement('p');
-      var audio = document.createElement('audio');
-      var audio2upload = document.createElement('input');
-      var deleteButton = document.createElement('button');
+      // var clipLabel = document.createElement('p');
+      // var audio = document.createElement('audio');
+      // var audio2upload = document.createElement('input');
+      // var deleteButton = document.createElement('button');
+      var callBack = document.createElement('p');
 
       // Create form that will be sent
-      var upload_form = document.createElement('form');
-      upload_form.setAttribute('method','post');
-      upload_form.setAttribute('action',"http://127.0.0.1:8081/submit");
+      // var upload_form = document.createElement('form');
+      // upload_form.setAttribute('method','post');
+      // upload_form.setAttribute('action',"http://127.0.0.1:8081/submit");
 
-      var submit = document.createElement("input"); //input element, Submit button
-      submit.setAttribute('type',"submit");
-      submit.setAttribute('value',"Submit");
+      // var submit = document.createElement("input"); //input element, Submit button
+      // submit.setAttribute('type',"submit");
+      // submit.setAttribute('value',"Submit");
       // audio2upload.setAttribute('controls', '');
 
-      upload_form.appendChild(audio2upload);
-      upload_form.appendChild(submit);
+      // upload_form.appendChild(audio2upload);
+      // upload_form.appendChild(submit);
       // End form
 
-      clipContainer.classList.add('clip');
-      audio.setAttribute('controls', '');
-      deleteButton.textContent = 'Delete';
-      deleteButton.className = 'delete';
+      // clipContainer.classList.add('clip');
+      // audio.setAttribute('controls', '');
+      // deleteButton.textContent = 'Delete';
+      // deleteButton.className = 'delete';
 
-      if(clipName === null) {
-        clipLabel.textContent = 'My unnamed clip';
-      } else {
-        clipLabel.textContent = clipName;
-      }
+      // if(clipName === null) {
+      //   clipLabel.textContent = 'My unnamed clip';
+      // } else {
+      //   clipLabel.textContent = clipName;
+      // }
 
-      clipContainer.appendChild(audio);
-      clipContainer.appendChild(clipLabel);
-      clipContainer.appendChild(deleteButton);
-      clipContainer.appendChild(upload_form);
+      callBack.innerHTML = 'Upload OK';
+
+      // clipContainer.appendChild(audio);
+      // clipContainer.appendChild(clipLabel);
+      // clipContainer.appendChild(deleteButton);
+      // clipContainer.appendChild(upload_form);
+      clipContainer.appendChild(callBack);
       soundClips.appendChild(clipContainer);
 
-      audio.controls = true;
+      // audio.controls = true;
       var blob = new Blob(chunks, {'type': 'audio/wav;'});
       chunks = [];
-      var audioURL = window.URL.createObjectURL(blob);
-      audio.src = audioURL;
-      audio2upload.value = audioURL;
+      // var audioURL = window.URL.createObjectURL(blob);
+      // audio.src = audioURL;
+      // audio2upload.value = audioURL;
       console.log("recorder stopped");
 
-      deleteButton.onclick = function(e) {
-        evtTgt = e.target;
-        evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
-      }
+      // deleteButton.onclick = function(e) {
+      //   evtTgt = e.target;
+      //   evtTgt.parentNode.parentNode.removeChild(evtTgt.parentNode);
+      // }
 
       // When everything is done, send the file to the server
       sendAudio(blob);
@@ -146,21 +150,10 @@ function sendAudio(blob) {
     body: blob
     });
   console.log("end_fetch");
-
-//   return ;
-//   var formData = new FormData();
-//   formData.append('fileName', 'Upload');
-//   formData.append('data', blob);
-//   console.log("fomrData in sendAudio fn");
-//   // console.log(formData);
-//   for (var pair of formData.entries()) {
-//     console.log(pair[0]+ ', ' + pair[1]);
-// }
 }
 
 
-
-
+// Nice to have, voice visualisation
 function visualize(stream) {
   var source = audioCtx.createMediaStreamSource(stream);
 
