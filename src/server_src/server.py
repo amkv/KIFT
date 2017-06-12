@@ -9,9 +9,9 @@ import sys
 import os
 import json
 from flask import render_template
+import socket
 # from sqlalchemy import create_engine
 # from flask.ext.jsonpify import jsonify
-
 
 # Constant variables
 app = Flask(__name__)
@@ -20,6 +20,7 @@ PATH = os.getcwd() + '/'
 # Folder for upload incoming wav files
 UPLOAD_FOLDER = 'uploaded'
 OUTGOING_FOLDER = 'outgoing'
+HOST = '127.0.0.1'
 # Checker for upload method, only wav
 # for example
 # ALLOWED_EXTENSIONS = set(['wav', 'mp3'])
@@ -107,10 +108,20 @@ def submit():
     #   return(text)
       return "Binary message written!"
 
+def check_port_is_open(port):
+    """Check is socket port opened"""
+    global HOST
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex((HOST, port))
+    if result == 0:
+       print "Port %(port)s is already opened." % {'port': port}
+       sys.exit(1)
+
 if __name__ == '__main__':
     """main method."""
     if len(sys.argv) != 2:
         print_usage()
     set_folders()
     port = set_port(sys.argv[1])
+    check_port_is_open(port)
     app.run(port = port)

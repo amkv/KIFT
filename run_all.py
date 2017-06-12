@@ -29,10 +29,20 @@ def main(argv):
     if len(argv) != 2:
         print_usage()
     port = set_port(argv[1])
-    os.system('make re')
-    os.system('python %(server)s %(num)s &' % {'server': SERVER_PATH + SERVER, 'num': port})
-    time.sleep(2)
-    webbrowser.open_new_tab(str(URL) + ':' + str(port))
+    try:
+        os.system('make re')
+    except:
+        print("something wrong with Makefile")
+        sys.exit(1)
+    try:
+        os.system('python %(server)s %(num)s &' % {'server': SERVER_PATH + SERVER, 'num': port})
+    except:
+        print("something wrong server")
+    time.sleep(1)
+    try:
+        webbrowser.open_new_tab(str(URL) + ':' + str(port))
+    except:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main(sys.argv)
