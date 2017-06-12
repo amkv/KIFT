@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, redirect, render_template
+from flask import Flask, request, redirect
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
 import shutil
@@ -11,13 +11,8 @@ import json
 # from sqlalchemy import create_engine
 # from flask.ext.jsonpify import jsonify
 
-<<<<<<< HEAD
 
 # Constant variables
-=======
-import wave
-
->>>>>>> 29e38df358ae9757e78ccec22ac5437f1f7485cf
 app = Flask(__name__)
 api = Api(app)
 PATH = os.getcwd() + '/'
@@ -64,7 +59,6 @@ def handler(filename):
 
 @app.route('/', methods=['GET', 'POST'])
 def upload_file():
-<<<<<<< HEAD
     if request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
@@ -78,41 +72,15 @@ def upload_file():
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return handler(filename)
-=======
-    # if request.method == 'POST':
-    #     # check if the post request has the file part
-    #     if 'file' not in request.files:
-    #         flash('No file part')
-    #         return redirect(request.url)
-    #     file = request.files['file']
-    #     # if user does not select file, browser also
-    #     # submit a empty part without filename
-    #     if file.filename == '':
-    #         flash('No selected file')
-    #         return redirect(request.url)
-    #     if file and allowed_file(file.filename):
-    #         filename = secure_filename(file.filename)
-    #         file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    #         return handler(filename)
-    # return '''
-    # <!doctype html>
-    # <title>KIFT server side</title>
-    # <h1>Upload wav file</h1>
-    # <form method=post enctype=multipart/form-data>
-    #   <p><input type=file name=file>
-    #      <input type=submit value=Upload>
-    # </form>
-    # '''
->>>>>>> 29e38df358ae9757e78ccec22ac5437f1f7485cf
     return '''
     <!doctype html>
     <title>KIFT server side</title>
-    <h1>server side</h1>
+    <h1>Upload wav file</h1>
+    <form method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
     '''
-
-@app.route('/upload')
-def upload():
-    return render_template("upload.html")
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
