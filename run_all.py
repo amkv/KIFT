@@ -30,11 +30,13 @@ def main(argv):
         print_usage()
     port = set_port(argv[1])
     try:
+        print('make re\n>>>>')
         os.system('make re')
     except:
         print("something wrong with Makefile")
         sys.exit(1)
     try:
+        print('launching server\n>>>>')
         os.system('python %(server)s %(num)s &' % {'server': SERVER_PATH + SERVER, 'num': port})
     except:
         print("something wrong server")

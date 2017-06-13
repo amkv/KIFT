@@ -63,28 +63,39 @@ def handler(filename):
 def upload(my_callback=None):
     return render_template("upload.html", my_callback="hello")
 
+
+
+
+# ⚠️ Not Working ⚠️
+# @app.route('/submit', methods=['GET', 'POST'])
+# def submit():
+#       # Open file and write binary (blob) data
+#       global UPLOAD_FOLDER
+#       print ('submit')
+#       new_file = str(os.urandom())
+#       f = open(PATH + UPLOAD_FOLDER + '/' + new_file, 'wb') #generate_name
+#       f.write(request.data)
+#       f.close()
+#     #   text = os.system(bla command_.wav)
+#     #   response = ft_handle(text)
+#     #         set_the_timer()
+#     #         return "OK"
+#     #   response
+#     #   print(text)
+#     #   return(text)
+#       return "Binary message written!"
+# ⚠️ Not Working ⚠️
+
+
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
-      # Open file and write binary (blob) data
-      global UPLOAD_FOLDER
-      print ('submit')
-      new_file = str(os.urandom())
-      f = open(PATH + UPLOAD_FOLDER + '/' + new_file, 'wb') #generate_name
+      Open file and write binary (blob) data
+      f = open('command_1.wav', 'wb')
       f.write(request.data)
       f.close()
-    #   text = os.system(bla command_.wav)
-    #   response = ft_handle(text)
-    #         set_the_timer()
-    #         return "OK"
-    #   response
-
-    #   Tweak to get the file .wav with the good header. Need to find a fix
-    #   os.system('ffmpeg -y -i ./commands_log/command_.wav -f s16le -acodec pcm_s16le ./commands_log/output.pcm')
-    #   os.system('ffmpeg -y -f s16le -ar 44.1k -ac 1 -i ./commands_log/output.pcm ./commands_log/command_.wav')
-    #   text = os.system('./bla ./commands_log/command_.wav')
-    #   print(text)
-    #   return(text)
+    #   print("command_ writen")
       return "Binary message written!"
+
 
 @app.route('/test', methods=['GET', 'POST'])
 def upload_file():
