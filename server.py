@@ -80,18 +80,19 @@ def upload_file():
     '''
 
 @app.route('/upload')
-def upload():
-    return render_template("upload.html")
+def upload(name="Artem"):
+    return render_template("upload.html", name=name)
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
       # Open file and write binary (blob) data
-      f = open('./commands_log/command_.wav', 'wb')
+      f = open('./commands_log/command_1.wav', 'wb')
       f.write(request.data)
       f.close()
+      print("command_ writen")
     #   Tweak to get the file .wav with the good header. Need to find a fix
-      os.system('ffmpeg -y -i ./commands_log/command_.wav -f s16le -acodec pcm_s16le ./commands_log/output.pcm')
-      os.system('ffmpeg -y -f s16le -ar 44.1k -ac 1 -i ./commands_log/output.pcm ./commands_log/command_.wav')
+    #   os.system('ffmpeg -y -i ./commands_log/command_.wav -f s16le -acodec pcm_s16le ./commands_log/output.pcm')
+    #   os.system('ffmpeg -y -f s16le -ar 44.1k -ac 1 -i ./commands_log/output.pcm ./commands_log/command_.wav')
     #   text = os.system('./bla ./commands_log/command_.wav')
     #   print(text)
     #   return(text)
