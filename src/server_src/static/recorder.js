@@ -77,7 +77,7 @@ var Recorder = exports.Recorder = (function () {
         this.worker = new _inlineWorker2.default(function () {
             var recLength = 0,
                 recBuffers = [],
-                sampleRate = 16000,
+                sampleRate = 44000,
                 numChannels = undefined;
 
             self.onmessage = function (e) {
@@ -101,7 +101,7 @@ var Recorder = exports.Recorder = (function () {
             };
 
             function init(config) {
-                sampleRate = 16000;
+                sampleRate = 44000;
                 numChannels = config.numChannels;
                 initBuffers();
             }

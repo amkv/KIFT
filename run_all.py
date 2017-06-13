@@ -29,6 +29,8 @@ def main(argv):
     if len(argv) != 2:
         print_usage()
     port = set_port(argv[1])
+    # relaunch server
+    os.system('python turnoff_server.py')
     try:
         print('make re\n>>>>')
         os.system('make re')
@@ -42,7 +44,8 @@ def main(argv):
         print("something wrong server")
     time.sleep(1)
     try:
-        webbrowser.open_new_tab(str(URL) + ':' + str(port))
+        # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '')
+        webbrowser.open_new_tab(str(URL) + ':' + str(port) + '/test')
     except:
         sys.exit(1)
 

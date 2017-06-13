@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, redirect
+from flask import Flask, request, redirect, url_for, send_from_directory
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
 import shutil
@@ -10,6 +10,10 @@ import os
 import json
 from flask import render_template
 import socket
+from random import randrange, uniform
+import time
+import subprocess
+from gtts import gTTS
 # from sqlalchemy import create_engine
 # from flask.ext.jsonpify import jsonify
 
@@ -20,6 +24,7 @@ PATH = os.getcwd() + '/'
 # Folder for upload incoming wav files
 UPLOAD_FOLDER = 'uploaded'
 OUTGOING_FOLDER = 'outgoing'
+SERVER_FOLDER = PATH + 'src/server_src/'
 HOST = '127.0.0.1'
 # Checker for upload method, only wav
 # for example
@@ -52,19 +57,21 @@ def set_port(argv):
     else:
         return port
 
+def check_port_is_open(port):
+    """Check is socket port opened"""
+    global HOST
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex((HOST, port))
+    if result == 0:
+        print "Port %(port)s is already opened." % {'port': port}
+        sys.exit(1)
+
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
-
-def handler(filename):
-    response = json.dumps({'status': 'ok', 'wav': filename, 'link': 'http://google.com'}, sort_keys=True, indent=4)
-    return response
 
 @app.route('/')
 def upload(my_callback=None):
     return render_template("upload.html", my_callback="hello")
-
-
-
 
 # ⚠️ Not Working ⚠️
 # @app.route('/submit', methods=['GET', 'POST'])
@@ -89,15 +96,14 @@ def upload(my_callback=None):
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
-      Open file and write binary (blob) data
-      f = open('command_1.wav', 'wb')
+      #Open file and write binary (blob) data
+      f = open('command_2.wav', 'wb')
       f.write(request.data)
       f.close()
     #   We need this to convert to the good format
-      sox INPUT_FILE -r 16000 -b 16 INPUT_FILE
+    #  sox INPUT_FILE -r 16000 -b 16 INPUT_FILE
     #   print("command_ writen")
       return "Binary message written!"
-
 
 @app.route('/test', methods=['GET', 'POST'])
 def upload_file():
@@ -111,9 +117,8 @@ def upload_file():
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            # filename = secure_filename(file.filename)
-            # Makes everything crash, added ""
-            filename = ""
+            filename = secure_filename(file.filename)
+            filename = str(randrange(1000, 3000)) + str(int(time.time())) + '.wav'
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return handler(filename)
     return '''
@@ -126,14 +131,12 @@ def upload_file():
     </form>
     '''
 
-def check_port_is_open(port):
-    """Check is socket port opened"""
-    global HOST
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    result = sock.connect_ex((HOST, port))
-    if result == 0:
-        print "Port %(port)s is already opened." % {'port': port}
-        sys.exit(1)
+def handler(filename):
+    output = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
+    tts = gTTS(text=output, lang='en')
+    tts.save(OUTGOING_FOLDER + '/' + filename + '.mp3')
+    # return send_from_directory(PATH + 'uploaded/', filename)
+    return send_from_directory(PATH + OUTGOING_FOLDER + '/', filename + '.mp3')
 
 if __name__ == '__main__':
     """main method."""
@@ -143,3 +146,13 @@ if __name__ == '__main__':
     port = set_port(sys.argv[1])
     check_port_is_open(port)
     app.run(port = port)
+
+
+# link  = '127.0.0.1:4040/uploaded/' + filename
+# response = json.dumps( \
+# { \
+# 'status': 'ok', \
+# 'wav': filename, \
+# 'link': link \
+# }, \
+# sort_keys=True, indent=4)

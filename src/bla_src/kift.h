@@ -13,7 +13,7 @@
 #ifndef KIFT_H
 # define KIFT_H
 
-# define MODELDIR "model/"
+# define MODELDIR "src/server_src/model/"
 # include <pocketsphinx.h>
 # include <err.h>
 # include <stdlib.h>

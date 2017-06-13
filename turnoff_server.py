@@ -9,10 +9,16 @@ def main():
     text = output.split('\n')
     for line in text:
         if server in line:
-            pid = line.split(' ')[1]
-            os.system('kill %(pid)s' % {'pid': pid})
-            print('process %(pid)s killed' % {'pid': pid})
-            found = True
+            text = line.split(' ')
+            for i in text:
+                try:
+                    pid = int(i)
+                    os.system('kill %(pid)s' % {'pid': pid})
+                    print('process %(pid)s killed' % {'pid': pid})
+                    found = True
+                    break
+                except:
+                    continue
     if not found:
         print('no active servers')
 

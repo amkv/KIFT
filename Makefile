@@ -39,7 +39,6 @@ $(NAME):
 	@$(CC) $(CFILES) $(FLAGS) $(DMOD) -c
 	@mv $(OFILES) $(PRJBLA)/
 	@$(CC) -o $(NAME) $(PRJBLA)/$(OFILES) $(DMOD2)
-	@mv $(NAME) $(SERVER)/
 	@echo "$(GRN)created$(CLN)"
 
 clean:
@@ -50,7 +49,7 @@ clean:
 fclean:
 	@echo "fcleaning... \c"
 	@$(RMF) $(PRJBLA)/$(OFILES)
-	@$(RMF) $(SERVER)/$(NAME)
+	@$(RMF) $(NAME)
 	@echo "$(WHT)fcleaned$(CLN)"
 
 c:
