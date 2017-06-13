@@ -5,42 +5,32 @@
     <meta name="viewport" content="width=device-width">
     <title>Web dictaphone</title>
     <link href="{{ url_for('static', filename="app.css") }}" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+    <script>{{ interactive_js }}</script>
   </head>
   <body>
 
     <div class="wrapper">
 
       <header>
-        <h1>Web dictaphone</h1>
+        <h1>Web dictaphone 2</h1>
+        <h2>This is my var: {{ name }}</h2>
       </header>
 
       <section class="main-controls">
         <canvas class="visualizer"></canvas>
         <div id="buttons">
-          <button class="record">Record</button>
-          <button class="stop">Stop</button>
+          <button class="record" onclick="startRecording(this);">Record</button>
+          <button class="stop" onclick="stopRecording(this);">Stop</button>
         </div>
       </section>
 
       <section class="sound-clips">
-        <!-- This is left here as a helper for testing the style of the clips
-        If you want to edit their appearance without having to record clips,
-        uncomment this and reload the page. Remember to comment it again when done!
-        <article class="clip">
-          <audio controls></audio>
-          <p>Sample clip name</p>
-          <button class="delete">Delete</button>
-        </article>
-        -->
       </section>
     </div>
 
-<h1>{{ my_callback }}</h1>
-
-    <!-- <script src="scripts/install.js"></script> -->
-
-    <!-- Below is your custom application script -->
     <script src="{{ url_for('static', filename="app.js") }}"></script>
+    <script src="{{ url_for('static', filename="recorder.js") }}"></script>
 
   </body>
 </html>
