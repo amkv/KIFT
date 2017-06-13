@@ -93,6 +93,8 @@ def submit():
       f = open('command_1.wav', 'wb')
       f.write(request.data)
       f.close()
+    #   We need this to convert to the good format
+      sox INPUT_FILE -r 16000 -b 16 INPUT_FILE
     #   print("command_ writen")
       return "Binary message written!"
 
