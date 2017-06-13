@@ -37,7 +37,7 @@ function stopRecording(button) {
 
 function POSTAudioRequest() {
   recorder && recorder.exportWAV(function(blob) {
-    fetch("http://127.0.0.1:8081/submit", {
+    fetch("http://127.0.0.1:4040/submit", {
     method: "post",
     body: blob
     });
