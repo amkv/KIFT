@@ -118,7 +118,7 @@ def upload_file():
             return redirect(request.url)
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
-            filename = str(randrange(1000, 3000)) + str(int(time.time())) + '.wav'
+            filename = str(randrange(1000, 3000)) + str(int(time.time()))
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return handler(filename)
     return '''
@@ -131,12 +131,16 @@ def upload_file():
     </form>
     '''
 
+def parser(text):
+    return "this is new test"
+
 def handler(filename):
-    output = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
-    tts = gTTS(text=output, lang='en')
-    tts.save(OUTGOING_FOLDER + '/' + filename + '.mp3')
-    # return send_from_directory(PATH + 'uploaded/', filename)
-    return send_from_directory(PATH + OUTGOING_FOLDER + '/', filename + '.mp3')
+    output_from_bla = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
+    otgoing_audio = filename # + '.mp3'
+    text_to_client = parser(output_from_bla)
+    tts = gTTS(text=text_to_client, lang='en')
+    tts.save(OUTGOING_FOLDER + '/' + otgoing_audio)
+    return send_from_directory(PATH + OUTGOING_FOLDER + '/', otgoing_audio)
 
 if __name__ == '__main__':
     """main method."""
@@ -146,7 +150,6 @@ if __name__ == '__main__':
     port = set_port(sys.argv[1])
     check_port_is_open(port)
     app.run(port = port)
-
 
 # link  = '127.0.0.1:4040/uploaded/' + filename
 # response = json.dumps( \
