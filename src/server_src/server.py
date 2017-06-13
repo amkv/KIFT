@@ -136,7 +136,7 @@ def parser(text):
 
 def handler(filename):
     output_from_bla = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
-    otgoing_audio = filename # + '.mp3'
+    otgoing_audio = filename + '.mp3'
     text_to_client = parser(output_from_bla)
     tts = gTTS(text=text_to_client, lang='en')
     tts.save(OUTGOING_FOLDER + '/' + otgoing_audio)
