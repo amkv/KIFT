@@ -59,31 +59,6 @@ def handler(filename):
     response = json.dumps({'status': 'ok', 'wav': filename, 'link': 'http://google.com'}, sort_keys=True, indent=4)
     return response
 
-# @app.route('/', methods=['GET', 'POST'])
-# def upload_file():
-#     if request.method == 'POST':
-#         # check if the post request has the file part
-#         if 'file' not in request.files:
-#             flash('No file part')
-#             return redirect(request.url)
-#         file = request.files['file']
-#         if file.filename == '':
-#             flash('No selected file')
-#             return redirect(request.url)
-#         if file and allowed_file(file.filename):
-#             filename = secure_filename(file.filename)
-#             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-#             return handler(filename)
-#     return '''
-#     <!doctype html>
-#     <title>KIFT server side</title>
-#     <h1>Upload wav file</h1>
-#     <form method=post enctype=multipart/form-data>
-#       <p><input type=file name=file>
-#          <input type=submit value=Upload>
-#     </form>
-#     '''
-
 @app.route('/')
 def upload(my_callback=None):
     return render_template("upload.html", my_callback="hello")
@@ -91,7 +66,10 @@ def upload(my_callback=None):
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
       # Open file and write binary (blob) data
-      f = open('./commands_log/command_.wav', 'wb') #generate_name
+      global UPLOAD_FOLDER
+      print ('submit')
+      new_file = str(os.urandom())
+      f = open(PATH + UPLOAD_FOLDER + '/' + new_file, 'wb') #generate_name
       f.write(request.data)
       f.close()
     #   text = os.system(bla command_.wav)
@@ -108,14 +86,40 @@ def submit():
     #   return(text)
       return "Binary message written!"
 
+@app.route('/test', methods=['GET', 'POST'])
+def upload_file():
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            # filename = secure_filename(file.filename)
+            filename =
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            return handler(filename)
+    return '''
+    <!doctype html>
+    <title>KIFT server side</title>
+    <h1>Upload wav file</h1>
+    <form method=post enctype=multipart/form-data>
+      <p><input type=file name=file>
+         <input type=submit value=Upload>
+    </form>
+    '''
+
 def check_port_is_open(port):
     """Check is socket port opened"""
     global HOST
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     result = sock.connect_ex((HOST, port))
     if result == 0:
-       print "Port %(port)s is already opened." % {'port': port}
-       sys.exit(1)
+        print "Port %(port)s is already opened." % {'port': port}
+        sys.exit(1)
 
 if __name__ == '__main__':
     """main method."""
