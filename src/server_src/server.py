@@ -96,9 +96,13 @@ def upload(my_callback=None):
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
-    f = open(PATH + UPLOAD_FOLDER + '/' + "to_be_analized.wav", 'wb')
+    # f = open(PATH + UPLOAD_FOLDER + '/' + "to_be_analized.wav", 'wb')
+    # f.write(request.data)
+    # f.close()
+    f = open('command_2.wav', 'wb')
     f.write(request.data)
     f.close()
+
     # Analyse file with bla and return the answer
     return "Analyzed string goes theres"
 
