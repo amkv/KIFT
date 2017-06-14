@@ -36,13 +36,27 @@ function stopRecording(button) {
 }
 
 function POSTAudioRequest() {
-  recorder && recorder.exportWAV(function(blob) {
-    fetch("http://127.0.0.1:4040/submit", {
-    method: "post",
-    body: blob
-    });
-  console.log("end_fetch");
-  });
+  recorder.exportWAV(function(blob) {
+   var data = new FormData();
+   data.append('file', blob);
+   var reader = new FileReader();
+   reader.onload = function() {
+     $.ajax({
+      url :  window.location.href + "submit",
+      type: 'POST',
+      data: reader.result,
+      contentType: false,
+      processData: false,
+      success: function(data) {
+        $('#result').text(data);
+      },
+      error: function() {
+       console.log("Error");
+     }
+   });
+   }
+   reader.readAsText(blob);
+ });
 }
 
 window.onload = function init() {

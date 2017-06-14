@@ -96,14 +96,11 @@ def upload(my_callback=None):
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
-      #Open file and write binary (blob) data
-      f = open('command_2.wav', 'wb')
-      f.write(request.data)
-      f.close()
-    #   We need this to convert to the good format
-    #  sox INPUT_FILE -r 16000 -b 16 INPUT_FILE
-    #   print("command_ writen")
-      return "Binary message written!"
+    f = open(PATH + UPLOAD_FOLDER + '/' + "to_be_analized.wav", 'wb')
+    f.write(request.data)
+    f.close()
+    # Analyse file with bla and return the answer
+    return "Analyzed string goes theres"
 
 @app.route('/test', methods=['GET', 'POST'])
 def upload_file():
