@@ -43,11 +43,11 @@ def main(argv):
     except:
         print("something wrong server")
     time.sleep(1)
-    try:
-        # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '')
-        webbrowser.open_new_tab(str(URL) + ':' + str(port) + '/test')
-    except:
-        sys.exit(1)
+    # try:
+    #     # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '')
+    #     # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '/test')
+    # except:
+    #     sys.exit(1)
 
 if __name__ == "__main__":
     main(sys.argv)

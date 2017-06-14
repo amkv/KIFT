@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, redirect, url_for, send_from_directory
+from flask import Flask, request, redirect, url_for, send_from_directory, make_response, send_file
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
 import shutil
@@ -132,7 +132,7 @@ def upload_file():
     '''
 
 def parser(text):
-    return "this is new test"
+    return text
 
 def handler(filename):
     output_from_bla = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
@@ -140,7 +140,10 @@ def handler(filename):
     text_to_client = parser(output_from_bla)
     tts = gTTS(text=text_to_client, lang='en')
     tts.save(OUTGOING_FOLDER + '/' + otgoing_audio)
-    return send_from_directory(PATH + OUTGOING_FOLDER + '/', otgoing_audio)
+    response = make_response(open(OUTGOING_FOLDER + '/' + otgoing_audio).read())
+    response.headers['Content-Type'] = 'audio/mp3'
+    response.headers['Content-Disposition'] = 'attachment; filename=' + otgoing_audio
+    return response
 
 if __name__ == '__main__':
     """main method."""
