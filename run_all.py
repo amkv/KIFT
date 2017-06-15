@@ -42,12 +42,13 @@ def main(argv):
         os.system('python %(server)s %(num)s &' % {'server': SERVER_PATH + SERVER, 'num': port})
     except:
         print("something wrong server")
-    # time.sleep(1)
-    # try:
-        # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '')
+    time.sleep(1)
+    try:
+        webbrowser.open_new_tab(str(URL) + ':' + str(port) + '')
         # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '/test')
-    # except:
-        # sys.exit(1)
+        pass
+    except:
+        sys.exit(1)
 
 if __name__ == "__main__":
     main(sys.argv)

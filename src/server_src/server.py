@@ -1,7 +1,7 @@
 #! /usr/bin/python
 # -*- coding: utf-8 -*-
 
-from flask import Flask, request, redirect, url_for, send_from_directory, make_response, send_file
+from flask import Flask, request, redirect, url_for, send_from_directory
 from flask_restful import Resource, Api
 from werkzeug.utils import secure_filename
 import shutil
@@ -12,14 +12,11 @@ from flask import render_template
 import socket
 from random import randrange, uniform
 import time
-import subprocess
-from gtts import gTTS
 import random
 import webbrowser
 
 
-# from sqlalchemy import create_engine
-# from flask.ext.jsonpify import jsonify
+from myserver import *
 
 # Constant variables
 app = Flask(__name__)
@@ -33,9 +30,6 @@ SERVER_FOLDER = PATH + 'src/server_src/'
 LOG_FOLDER = 'history'
 LOG_FILE = 'logs'
 HOST = '127.0.0.1'
-# Checker for upload method, only wav
-# for example
-# ALLOWED_EXTENSIONS = set(['wav', 'mp3'])
 ALLOWED_EXTENSIONS = set(['wav'])
 app.config['UPLOAD_FOLDER'] = PATH + UPLOAD_FOLDER
 
@@ -53,11 +47,6 @@ def set_folders():
     os.mkdir(PATH + UPLOAD_FOLDER)
     os.mkdir(PATH + OUTGOING_FOLDER)
     os.mkdir(PATH + LOG_FOLDER)
-
-def print_usage():
-    """show usage and exit"""
-    print ('usage: server.py <port number>')
-    sys.exit(0)
 
 def set_port(argv):
     """convert argument, check number in range, return port"""
@@ -94,7 +83,13 @@ def submit():
     data = {};
     # data['text'] = "salut asdfsdaf asdf  asdf"
 
-    output_from_bla = subprocess.check_output('./bla toto.wav', shell=True)
+
+    os.system('sox toto.wav -r 16000 toto_converted.wav')
+    # os.system('ffmpeg -y -i toto.wav -f s16le -acodec pcm_s16le toto.pcm')
+    # os.system('ffmpeg -y -f s16le -ar 44.1k -ac 1 -i toto.pcm toto.wav')
+
+    output_from_bla = subprocess.check_output('./bla toto_converted.wav', shell=True)
+    text_output = actionParser(output_from_bla)
 
     print("\n\n")
     print(output_from_bla)
@@ -105,13 +100,15 @@ def submit():
 
     # ft_handler(text_input);
 
-    tts = gTTS(text="return output", lang='en')
-    tts.save("src/server_src/static/outgoing/toto_output.mp3")
+    file_name_output = str(randrange(1000, 3000)) + str(int(time.time())) + '.mp3'
+
+    tts = gTTS(text=text_output, lang='en')
+    tts.save("src/server_src/static/outgoing/" + file_name_output)
 
 
     # json = ft_action(data['filePath_input'])
-    data['filePath_output'] = "toto_output.mp3"
-    data['text_output'] = "return output"
+    data['filePath_output'] = file_name_output
+    data['text_output'] = text_output
 
     json_data = json.dumps(data)
 
@@ -161,67 +158,6 @@ def save_to_log(text):
 
 # #######################################################################
 
-def text2int (textnum, numwords={}):
-    if not numwords:
-        units = [
-        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
-        "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
-        "sixteen", "seventeen", "eighteen", "nineteen",
-        ]
-
-        tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
-
-        scales = ["hundred", "thousand", "million", "billion", "trillion"]
-
-        numwords["and"] = (1, 0)
-        for idx, word in enumerate(units):
-            numwords[word] = (1, idx)
-        for idx, word in enumerate(tens):
-            numwords[word] = (1, idx * 10)
-        for idx, word in enumerate(scales):
-            numwords[word] = (10 ** (idx * 3 or 2), 0)
-
-    ordinal_words = {'first':1, 'second':2, 'third':3, 'fifth':5, 'eighth':8, 'ninth':9, 'twelfth':12}
-    ordinal_endings = [('ieth', 'y'), ('th', '')]
-
-    # textnum = textnum.replace('-', ' ')
-
-    current = result = 0
-    curstring = ""
-    onnumber = False
-    for word in textnum.split():
-        if word in ordinal_words:
-            scale, increment = (1, ordinal_words[word])
-            current = current * scale + increment
-            if scale > 100:
-                result += current
-                current = 0
-            onnumber = True
-        else:
-            for ending, replacement in ordinal_endings:
-                if word.endswith(ending):
-                    word = "%s%s" % (word[:-len(ending)], replacement)
-
-            if word not in numwords:
-                if onnumber:
-                    curstring += repr(result + current) + " "
-                curstring += word + " "
-                result = current = 0
-                onnumber = False
-            else:
-                scale, increment = numwords[word]
-
-                current = current * scale + increment
-                if scale > 100:
-                    result += current
-                    current = 0
-                onnumber = True
-
-    if onnumber:
-        curstring += repr(result + current)
-
-    return curstring
-
 def timeParser(text):
     string = iter(text2int(text).split(' '))
     hour = 0
@@ -251,114 +187,7 @@ def runAlarm(second):
     type(curTime)
     #.strftime('%Y-%m-%d %H:%M:%S')
 
-def actionParser(text):
-    text = text.lower()
-    string = iter(text2int(text).split(' '))
-
-    for each in string:
-        if 'hello' in each:
-            return "hello you"
-        elif "set" in each:
-            each = next(string)
-            if "timer" in each:
-                second = timeParser(text)
-                if second > 0:
-                    runTimer(second)
-                return "Timer was set";
-            if "alarm" in each or "an" in each:
-                if "an" in each:
-                    each = next(string)
-                    if not "alarm" in each:
-                        return "Bad input"
-                    second = timeParser(text)
-                    if second > 0:
-                        runAlarm(second)
-                        return "Alarm was set";
-        elif "play" in each or "playing" in each:
-            each = next(string)
-            if "music" in each or "jazz" in each:
-                os.system("play strange_fruit.mp3")
-                return "Music was played";
-        elif "search" in each:
-            each = next(string)
-            if "web" in each or "the" in each:
-                if "the" in each:
-                    each = next(string)
-                    if not "web" in each:
-                        return "Bad input"
-                each = next(next(string))
-                webbrowser.open('https://www.google.com/webhp#q=%s' % each)
-                return "Google search done"
-        elif "google" in each:
-            each = next(string)
-            webbrowser.open('https://www.google.com/webhp#q=%s' % each)
-            return "Search was done"
-        elif "tell" in each:
-            each = next(string)
-            if "me" in each or "joke" in each:
-                if "me" in each:
-                    each = next(string)
-                    if not "joke":
-                        return "Bad input"
-                    return ("Past, present and future walk into a bar. It was tense.")
-        elif "what" in each:
-            each = next(string)
-            if "is" in each:
-                each = next(string)
-                if "forty" in each or "42" in each:
-                    each = next(string)
-                    if "two" in each:
-                        if not "two" in each:
-                            return "Bad input"
-                    return "Forty two is an innovative coding college producing the next generation of software engineers and programmers"
-            if "time" in each:
-                each = next(string)
-                if "is" in each:
-                    each = next(string)
-                    if not "it" in each:
-                        return "Bad input"
-                    ret = "Today is" + d.strftime("%A %d. %B %Y")
-                    return ret
-
-        else:
-            badinput = [
-            'I don\'t get it',
-            'Bad input',
-            'NO!',
-            'Sorry',
-            'Marry me first',
-            'I am too lasy today',
-            'Boring',
-            'Go away',
-            'Try again',
-            'Make me Great again',
-            'Oh Oh',
-            'Something went wrong',
-            'I don\'t want to talk',
-            'I am to busy now, to speak with you']
-            return random.choice(badinput)
-
 # #######################################################################
-
-# def parser(text):
-#     if 'hello' in text:
-#         result = "oh! hello, nice to see you!"
-#     else:
-#         result = "Sorry, you are bad programmers, very bad programmers"
-#     save_to_log(text, result)
-#     return result
-
-def handler(filename):
-    output_from_bla = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
-    otgoing_audio = filename + '.mp3'
-    save_to_log(output_from_bla)
-    text_to_client = actionParser(output_from_bla)
-    tts = gTTS(text=text_to_client, lang='en')
-    tts.save(OUTGOING_FOLDER + '/' + otgoing_audio)
-    response = make_response(open(OUTGOING_FOLDER + '/' + otgoing_audio).read())
-    response.headers['Content-Type'] = 'audio/mp3'
-    response.headers['Content-Disposition'] = 'attachment; filename=' + otgoing_audio
-    return response
 
 if __name__ == '__main__':
     """main method."""
