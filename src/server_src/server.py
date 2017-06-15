@@ -104,15 +104,25 @@ def submit():
     f.write(request.data)
     f.close()
     data = {};
-    data['filePath'] = "toto.wav"
     # data['text'] = "salut asdfsdaf asdf  asdf"
 
     output_from_bla = subprocess.check_output('./bla toto.wav', shell=True)
+
     print("\n\n")
     print(output_from_bla)
     # otgoing_audio = filename + '.mp3'
     # text_to_client = parser(output_from_bla)
-    data['text'] = output_from_bla
+    data['filePath_input'] = "toto.wav"
+    data['text_input'] = output_from_bla
+
+
+    tts = gTTS(text="return output", lang='en')
+    tts.save("src/server_src/static/outgoing/toto_output.mp3")
+
+
+    # json = ft_action(data['filePath_input'])
+    data['filePath_output'] = "toto_output.mp3"
+    data['text_output'] = "return output"
 
     json_data = json.dumps(data)
 

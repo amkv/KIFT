@@ -45,9 +45,12 @@ function POSTAudioRequest() {
       success: function(data) {
         var json_object = JSON.parse(data);
         console.log(json_object);
-        $('#result').text(json_object.text);
+        // console.log(json_object.text_output);
+        $('#result').text(json_object.text_output);
+        // $('#result').text(json_object.text_output);
         $("#record").css("background-color","blue");
-        $("#sound").attr("src", "/static/outgoing/" + json_object.filePath);
+        $("#sound").attr("src", "/static/outgoing/" + json_object.filePath_output);
+        // $("#sound").attr("src", "/static/outgoing/" + json_object.filePath);
       },
       error: function() {
        console.log("Error");
