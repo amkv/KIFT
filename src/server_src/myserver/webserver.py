@@ -78,7 +78,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             filename = str(randrange(1000, 3000)) + str(int(time.time()))
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return handler(filename)
+            return handler(filename, app.config['UPLOAD_FOLDER'], app.config['OUTGONING_FOLDER'])
     return '''
     <!doctype html>
     <title>KIFT server side</title>
@@ -89,6 +89,7 @@ def upload_file():
     </form>
     '''
 
-def run_the_server(port, path, uploaded_folder):
+def run_the_server(port, path, uploaded_folder, outgoing_folder):
     app.config['UPLOAD_FOLDER'] = path + uploaded_folder
+    app.config['OUTGONING_FOLDER'] = path + outgoing_folder
     app.run(port = port)

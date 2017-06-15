@@ -58,7 +58,7 @@ if __name__ == "__main__":
                 pass
                 # print("> [can't create file]")
             try:
-                os.system('output_to_client.mp3')
+                os.system('play output_to_client.mp3')
                 # print "> [file played]"
             except:
                 pass

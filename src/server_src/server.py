@@ -45,7 +45,7 @@ def main(argv):
     set_folder(path, log_folder)
     port = set_port(argv[1])
     check_port_is_open(host, port)
-    run_the_server(port, path, upload_folder)
+    run_the_server(port, path, upload_folder, outgoing_folder)
 
 if __name__ == '__main__':
     main(sys.argv)

@@ -44,7 +44,7 @@ def main(argv):
         print("something wrong server")
     time.sleep(1)
     try:
-        webbrowser.open_new_tab(str(URL) + ':' + str(port) + '')
+        # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '')
         # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '/test')
         pass
     except:
