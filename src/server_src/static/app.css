@@ -47,7 +47,7 @@ canvas {
 #buttons button {
   font-size: 1rem;
   padding: 1rem;
-  width: calc(50% - 0.25rem);
+  width: 100%;
 }
 
 button {
@@ -162,8 +162,23 @@ input[type=checkbox]:checked ~ aside {
   /* Don't take all the space as readability is lost when line length
      goes past a certain size */
   .wrapper {
-    width: 90%;
+    width: 40%;
     max-width: 1000px;
     margin: 0 auto;
   }
+}
+
+.elem_usr {
+  border: 1px solid grey;
+  padding: 10px;
+  box-shadow: 1px 1px 5px 1px;
+  margin: 10px 0px 10px 0px;
+  text-align: right;
+}
+
+.elem_machine {
+  border: 1px solid grey;
+  padding: 10px;
+  box-shadow: 1px 1px 5px 1px;
+  margin: 10px 0px 10px 0px;
 }

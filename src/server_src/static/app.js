@@ -32,6 +32,29 @@ function stopRecording() {
   recorder.clear();
 }
 
+function AddToConversation(json_object, from) {
+  if (from == "user") {
+
+    var $div = $("<div>", {"class": "elem_usr"});
+    $div.prepend("You: " + json_object.text_input + "<p>");
+    $("<audio></audio>").attr({
+      'src':'/static/outgoing/' + json_object.filePath_input,
+      'controls':'controls'
+    }).appendTo($div);
+
+  }
+  if (from == "machine") {
+
+    var $div = $("<div>", {"class": "elem_machine"});
+    $div.prepend("Machine: " + json_object.text_output + "<p>");
+    $("<audio></audio>").attr({
+      'src':'/static/outgoing/' + json_object.filePath_output,
+      'controls':'controls'
+    }).appendTo($div);
+  }
+  $("#conversation").prepend($div);
+}
+
 function POSTAudioRequest() {
   recorder.exportWAV(function(blob) {
    var reader = new FileReader();
@@ -49,8 +72,11 @@ function POSTAudioRequest() {
         $('#result').text(json_object.text_output);
         // $('#result').text(json_object.text_output);
         $("#record").css("background-color","blue");
-        $("#sound").attr("src", "/static/outgoing/" + json_object.filePath_output);
+        // $("#sound").attr("src", "/static/outgoing/" + json_object.filePath_output);
         // $("#sound").attr("src", "/static/outgoing/" + json_object.filePath);
+
+        AddToConversation(json_object, "user");
+        AddToConversation(json_object, "machine");
       },
       error: function() {
        console.log("Error");
