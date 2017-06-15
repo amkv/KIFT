@@ -26,6 +26,8 @@ print PATH
 UPLOAD_FOLDER = 'uploaded'
 OUTGOING_FOLDER = 'outgoing'
 SERVER_FOLDER = PATH + 'src/server_src/'
+LOG_FOLDER = 'history'
+LOG_FILE = 'logs'
 HOST = '127.0.0.1'
 # Checker for upload method, only wav
 # for example
@@ -42,8 +44,11 @@ def set_folders():
         shutil.rmtree(PATH + UPLOAD_FOLDER)
     if os.path.exists(PATH + OUTGOING_FOLDER):
         shutil.rmtree(PATH + OUTGOING_FOLDER)
+    if os.path.exists(PATH + LOG_FOLDER):
+        shutil.rmtree(PATH + LOG_FOLDER)
     os.mkdir(PATH + UPLOAD_FOLDER)
     os.mkdir(PATH + OUTGOING_FOLDER)
+    os.mkdir(PATH + LOG_FOLDER)
 
 def print_usage():
     """show usage and exit"""
@@ -155,8 +160,21 @@ def upload_file():
     </form>
     '''
 
+def save_to_log(text, result):
+    global PATH
+    global LOG_FOLDER
+    global LOG_FILE
+    logfile = open(PATH + LOG_FOLDER + '/' + LOG_FILE, 'w')
+    logfile.write(text + '|' + result)
+    logfile.close()
+
 def parser(text):
-    return text
+    if 'hello' in text:
+        result = "oh! hello, nice to see you!"
+    else:
+        result = "Sorry, you are bad programmers, very bad programmers"
+    save_to_log(text, result)
+    return result
 
 def handler(filename):
     output_from_bla = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
