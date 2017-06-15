@@ -15,6 +15,7 @@ import time
 import subprocess
 from gtts import gTTS
 import random
+import webbrowser
 
 
 # from sqlalchemy import create_engine
@@ -320,13 +321,20 @@ def actionParser(text):
 
         else:
             badinput = [
-            'Oh, No, I don\'t get it',
+            'I don\'t get it',
             'Bad input',
             'NO!',
             'Sorry',
             'Marry me first',
             'I am too lasy today',
-            'Booooring']
+            'Boring',
+            'Go away',
+            'Try again',
+            'Make me Great again',
+            'Oh Oh',
+            'Something went wrong',
+            'I don\'t want to talk',
+            'I am to busy now, to speak with you']
             return random.choice(badinput)
 
 # #######################################################################
