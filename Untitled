@@ -1,4 +1,0 @@
-import requests
-
-link = 'http://127.0.0.1:4040/test'
-r = requests.get(link)
