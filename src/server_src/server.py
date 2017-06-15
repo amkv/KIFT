@@ -105,8 +105,18 @@ def submit():
     f.close()
     data = {};
     data['filePath'] = "toto.wav"
-    data['text'] = "salut asdfsdaf asdf  asdf"
+    # data['text'] = "salut asdfsdaf asdf  asdf"
+
+    output_from_bla = subprocess.check_output('./bla toto.wav', shell=True)
+    print("\n\n")
+    print(output_from_bla)
+    # otgoing_audio = filename + '.mp3'
+    # text_to_client = parser(output_from_bla)
+    data['text'] = output_from_bla
+
     json_data = json.dumps(data)
+
+    # return json_data
     return json_data
 
 @app.route('/test', methods=['GET', 'POST'])
