@@ -7,26 +7,6 @@ from datetime import datetime
 from numParser import text2int
 
 def timeParser(text):
-<<<<<<< HEAD
-	string = iter(text2int(text).split(' '))
-	hour = 0
-	minute = 0
-	second = 0
-	for each in string:
-		try:
-			temp = int(each)
-		except:
-			continue
-		if temp > 0:
-			each = next(string)
-			if ('hour' or 'hours') in each:
-				hour = temp
-			elif ('minute' or 'minutes') in each:
-				minute = temp
-			elif ('second' or 'seconds') in each:
-				second = temp
-	return second + (minute * 60) + (hour * 3600)
-=======
     string = iter(text2int(text).split(' '))
     hour = 0
     minute = 0
@@ -45,7 +25,6 @@ def timeParser(text):
             elif ('second' or 'seconds') in each:
                 second = temp
     return second + (minute * 60) + (hour * 3600)
->>>>>>> 5aa15946c9f746b93640c328085d756e57ba6d72
 
 def runTimer(second):
     webbrowser.open('http://e.ggtimer.com/%d' % second)

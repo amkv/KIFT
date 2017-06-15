@@ -14,6 +14,9 @@ from random import randrange, uniform
 import time
 import subprocess
 from gtts import gTTS
+import random
+
+
 # from sqlalchemy import create_engine
 # from flask.ext.jsonpify import jsonify
 
@@ -138,26 +141,209 @@ def upload_file():
     </form>
     '''
 
-def save_to_log(text, result):
+# def save_to_log(text, result):
+#     global PATH
+#     global LOG_FOLDER
+#     global LOG_FILE
+#     logfile = open(PATH + LOG_FOLDER + '/' + LOG_FILE, 'w')
+#     logfile.write(text + '|' + result)
+#     logfile.close()
+
+def save_to_log(text):
     global PATH
     global LOG_FOLDER
     global LOG_FILE
-    logfile = open(PATH + LOG_FOLDER + '/' + LOG_FILE, 'w')
-    logfile.write(text + '|' + result)
+    logfile = open(PATH + LOG_FOLDER + '/' + LOG_FILE, 'a')
+    logfile.write(text)
     logfile.close()
 
-def parser(text):
-    if 'hello' in text:
-        result = "oh! hello, nice to see you!"
-    else:
-        result = "Sorry, you are bad programmers, very bad programmers"
-    save_to_log(text, result)
-    return result
+# #######################################################################
+
+def text2int (textnum, numwords={}):
+    if not numwords:
+        units = [
+        "zero", "one", "two", "three", "four", "five", "six", "seven", "eight",
+        "nine", "ten", "eleven", "twelve", "thirteen", "fourteen", "fifteen",
+        "sixteen", "seventeen", "eighteen", "nineteen",
+        ]
+
+        tens = ["", "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"]
+
+        scales = ["hundred", "thousand", "million", "billion", "trillion"]
+
+        numwords["and"] = (1, 0)
+        for idx, word in enumerate(units):
+            numwords[word] = (1, idx)
+        for idx, word in enumerate(tens):
+            numwords[word] = (1, idx * 10)
+        for idx, word in enumerate(scales):
+            numwords[word] = (10 ** (idx * 3 or 2), 0)
+
+    ordinal_words = {'first':1, 'second':2, 'third':3, 'fifth':5, 'eighth':8, 'ninth':9, 'twelfth':12}
+    ordinal_endings = [('ieth', 'y'), ('th', '')]
+
+    # textnum = textnum.replace('-', ' ')
+
+    current = result = 0
+    curstring = ""
+    onnumber = False
+    for word in textnum.split():
+        if word in ordinal_words:
+            scale, increment = (1, ordinal_words[word])
+            current = current * scale + increment
+            if scale > 100:
+                result += current
+                current = 0
+            onnumber = True
+        else:
+            for ending, replacement in ordinal_endings:
+                if word.endswith(ending):
+                    word = "%s%s" % (word[:-len(ending)], replacement)
+
+            if word not in numwords:
+                if onnumber:
+                    curstring += repr(result + current) + " "
+                curstring += word + " "
+                result = current = 0
+                onnumber = False
+            else:
+                scale, increment = numwords[word]
+
+                current = current * scale + increment
+                if scale > 100:
+                    result += current
+                    current = 0
+                onnumber = True
+
+    if onnumber:
+        curstring += repr(result + current)
+
+    return curstring
+
+def timeParser(text):
+    string = iter(text2int(text).split(' '))
+    hour = 0
+    minute = 0
+    second = 0
+    for each in string:
+        try:
+            temp = int(each)
+        except:
+            continue
+        if temp > 0:
+            each = next(string)
+            if ('hour' or 'hours') in each:
+                hour = temp
+            elif ('minute' or 'minutes') in each:
+                minute = temp
+            elif ('second' or 'seconds') in each:
+                second = temp
+    return second + (minute * 60) + (hour * 3600)
+
+def runTimer(second):
+    webbrowser.open('http://e.ggtimer.com/%d' % second)
+
+def runAlarm(second):
+    curTime = datetime.now()
+    print curTime
+    type(curTime)
+    #.strftime('%Y-%m-%d %H:%M:%S')
+
+def actionParser(text):
+    text = text.lower()
+    string = iter(text2int(text).split(' '))
+
+    for each in string:
+        if 'hello' in each:
+            return "hello you"
+        elif "set" in each:
+            each = next(string)
+            if "timer" in each:
+                second = timeParser(text)
+                if second > 0:
+                    runTimer(second)
+                return "Timer was set";
+            if "alarm" in each or "an" in each:
+                if "an" in each:
+                    each = next(string)
+                    if not "alarm" in each:
+                        return "Bad input"
+                    second = timeParser(text)
+                    if second > 0:
+                        runAlarm(second)
+                        return "Alarm was set";
+        elif "play" in each or "playing" in each:
+            each = next(string)
+            if "music" in each or "jazz" in each:
+                os.system("play strange_fruit.mp3")
+                return "Music was played";
+        elif "search" in each:
+            each = next(string)
+            if "web" in each or "the" in each:
+                if "the" in each:
+                    each = next(string)
+                    if not "web" in each:
+                        return "Bad input"
+                each = next(next(string))
+                webbrowser.open('https://www.google.com/webhp#q=%s' % each)
+                return "Google search done"
+        elif "google" in each:
+            each = next(string)
+            webbrowser.open('https://www.google.com/webhp#q=%s' % each)
+            return "Search was done"
+        elif "tell" in each:
+            each = next(string)
+            if "me" in each or "joke" in each:
+                if "me" in each:
+                    each = next(string)
+                    if not "joke":
+                        return "Bad input"
+                    return ("Past, present and future walk into a bar. It was tense.")
+        elif "what" in each:
+            each = next(string)
+            if "is" in each:
+                each = next(string)
+                if "forty" in each or "42" in each:
+                    each = next(string)
+                    if "two" in each:
+                        if not "two" in each:
+                            return "Bad input"
+                    return "Forty two is an innovative coding college producing the next generation of software engineers and programmers"
+            if "time" in each:
+                each = next(string)
+                if "is" in each:
+                    each = next(string)
+                    if not "it" in each:
+                        return "Bad input"
+                    ret = "Today is" + d.strftime("%A %d. %B %Y")
+                    return ret
+
+        else:
+            badinput = [
+            'Oh, No, I don\'t get it',
+            'Bad input',
+            'NO!',
+            'Sorry',
+            'Marry me first',
+            'I am too lasy today',
+            'Booooring']
+            return random.choice(badinput)
+
+# #######################################################################
+
+# def parser(text):
+#     if 'hello' in text:
+#         result = "oh! hello, nice to see you!"
+#     else:
+#         result = "Sorry, you are bad programmers, very bad programmers"
+#     save_to_log(text, result)
+#     return result
 
 def handler(filename):
     output_from_bla = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
     otgoing_audio = filename + '.mp3'
-    text_to_client = parser(output_from_bla)
+    save_to_log(output_from_bla)
+    text_to_client = actionParser(output_from_bla)
     tts = gTTS(text=text_to_client, lang='en')
     tts.save(OUTGOING_FOLDER + '/' + otgoing_audio)
     response = make_response(open(OUTGOING_FOLDER + '/' + otgoing_audio).read())
