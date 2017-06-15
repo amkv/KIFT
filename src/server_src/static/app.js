@@ -49,7 +49,8 @@ function AddToConversation(json_object, from) {
     $div.prepend("Machine: " + json_object.text_output + "<p>");
     $("<audio></audio>").attr({
       'src':'/static/outgoing/' + json_object.filePath_output,
-      'controls':'controls'
+      'controls':'controls',
+      'autoplay':'autoplay'
     }).appendTo($div);
   }
   $("#conversation").prepend($div);

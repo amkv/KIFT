@@ -102,6 +102,7 @@ def submit():
     data['filePath_input'] = "toto.wav"
     data['text_input'] = output_from_bla
 
+    # ft_handler(text_input);
 
     tts = gTTS(text="return output", lang='en')
     tts.save("src/server_src/static/outgoing/toto_output.mp3")
