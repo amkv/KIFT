@@ -11,7 +11,7 @@ def timeParser(text):
 	hour = 0
 	minute = 0
 	second = 0
-	for each in string:	
+	for each in string:
 		try:
 			temp = int(each)
 		except:
