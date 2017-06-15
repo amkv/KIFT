@@ -4,6 +4,7 @@ import requests
 import os
 from random import randrange
 import sys
+import shutil
 
 def new_voice(path, wavname):
     try:
@@ -50,14 +51,14 @@ if __name__ == "__main__":
                 pass
                 # print("> [can't send request to server]")
             try:
-                with open ('test.mp3', 'wb') as f:
+                with open ('output_to_client.mp3', 'wb') as f:
                     f.write(r.content)
                     # print "> [file created]"
             except:
                 pass
                 # print("> [can't create file]")
             try:
-                os.system('play test.mp3')
+                os.system('output_to_client.mp3')
                 # print "> [file played]"
             except:
                 pass
