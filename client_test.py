@@ -7,7 +7,7 @@ import sys
 
 def new_voice(path, wavname):
     try:
-        os.system('rec -r 16k -e signed-integer -b 16 -c 1 %(path)s%(wavname)s.wav' % {'path' : path, 'wavname' : wavname})
+        os.system('rec -r 16000 -e signed-integer -b 16 -c 1 %(path)s%(wavname)s.wav' % {'path' : path, 'wavname' : wavname})
     except:
         print('can\'t create %(path)s%(name)s' % {'wavname' : wavname, 'path' : path})
         sys.exit(0)

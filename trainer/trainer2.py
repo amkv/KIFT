@@ -17,7 +17,7 @@ def read_file():
             print(text)
             raw_input('ready for next? ctr-c for stop recording')
             print("-----------")
-            os.system('rec -r 16k -e signed-integer -b 16 -c 1 %(path)s%(quoted)s.wav' % {'path' : path, 'quoted' : quoted})
+            os.system('rec -r 16000 -e signed-integer -b 16 -c 1 %(path)s%(quoted)s.wav' % {'path' : path, 'quoted' : quoted})
 
 def main():
     read_file()

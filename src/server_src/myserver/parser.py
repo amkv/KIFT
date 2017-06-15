@@ -1,5 +1,8 @@
 from text2int import *
 from badinput import *
+import webbrowser
+import os
+import sys
 
 def actionParser(text):
     text = text.lower()

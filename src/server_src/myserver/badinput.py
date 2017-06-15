@@ -15,7 +15,7 @@ def badinput():
     'I don\'t want to talk',
     'I am to busy now, to speak with you',
     'I swear, I knew it. But now I forgot',
-    'Ok, ooooook, No. I missied it',
+    'Ok, ooooook, OK! One second. No. I missed that',
     'I don\'t know what that means',
     'I\'m not sure I understand',
     'Can you please repeat that?',
