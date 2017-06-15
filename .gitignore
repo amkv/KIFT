@@ -7,3 +7,4 @@ server
 cmake-build-debug/
 outgoing
 uploaded
+*.DS_Store

@@ -21,6 +21,7 @@ from gtts import gTTS
 app = Flask(__name__)
 api = Api(app)
 PATH = os.getcwd() + '/'
+print PATH
 # Folder for upload incoming wav files
 UPLOAD_FOLDER = 'uploaded'
 OUTGOING_FOLDER = 'outgoing'
@@ -99,12 +100,34 @@ def submit():
     # f = open(PATH + UPLOAD_FOLDER + '/' + "to_be_analized.wav", 'wb')
     # f.write(request.data)
     # f.close()
-    f = open('command_2.wav', 'wb')
+    f = open('toto.wav', 'wb')
     f.write(request.data)
     f.close()
+    data = {};
+    # data['text'] = "salut asdfsdaf asdf  asdf"
 
-    # Analyse file with bla and return the answer
-    return "Analyzed string goes theres"
+    output_from_bla = subprocess.check_output('./bla toto.wav', shell=True)
+
+    print("\n\n")
+    print(output_from_bla)
+    # otgoing_audio = filename + '.mp3'
+    # text_to_client = parser(output_from_bla)
+    data['filePath_input'] = "toto.wav"
+    data['text_input'] = output_from_bla
+
+
+    tts = gTTS(text="return output", lang='en')
+    tts.save("src/server_src/static/outgoing/toto_output.mp3")
+
+
+    # json = ft_action(data['filePath_input'])
+    data['filePath_output'] = "toto_output.mp3"
+    data['text_output'] = "return output"
+
+    json_data = json.dumps(data)
+
+    # return json_data
+    return json_data
 
 @app.route('/test', methods=['GET', 'POST'])
 def upload_file():

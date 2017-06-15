@@ -14,20 +14,22 @@
 
       <header>
         <h1>Web dictaphone 2</h1>
-         <h2>This is my var: <span id="result"></span></h2>
+        <audio src="" autoplay controls id="sound"></audio>
+
+         <h2>You said : <span id="result"></span></h2>
       </header>
 
       <section class="main-controls">
         <canvas class="visualizer"></canvas>
-        <div id="buttons">
-          <button class="record" onclick="startRecording(this);">Record</button>
-          <button class="stop" onclick="stopRecording(this);">Stop</button>
+          <div id="buttons">
+          <button id="record">Record</button>
         </div>
+     
       </section>
-
       <section class="sound-clips">
       </section>
     </div>
+
 
     <script src="{{ url_for('static', filename="app.js") }}"></script>
     <script src="{{ url_for('static', filename="recorder.js") }}"></script>
