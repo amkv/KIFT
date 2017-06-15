@@ -79,27 +79,6 @@ def allowed_file(filename):
 def upload(my_callback=None):
     return render_template("upload.html", my_callback="hello")
 
-# ⚠️ Not Working ⚠️
-# @app.route('/submit', methods=['GET', 'POST'])
-# def submit():
-#       # Open file and write binary (blob) data
-#       global UPLOAD_FOLDER
-#       print ('submit')
-#       new_file = str(os.urandom())
-#       f = open(PATH + UPLOAD_FOLDER + '/' + new_file, 'wb') #generate_name
-#       f.write(request.data)
-#       f.close()
-#     #   text = os.system(bla command_.wav)
-#     #   response = ft_handle(text)
-#     #         set_the_timer()
-#     #         return "OK"
-#     #   response
-#     #   print(text)
-#     #   return(text)
-#       return "Binary message written!"
-# ⚠️ Not Working ⚠️
-
-
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
     # f = open(PATH + UPLOAD_FOLDER + '/' + "to_be_analized.wav", 'wb')
@@ -137,7 +116,6 @@ def submit():
 @app.route('/test', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
-        # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             return redirect(request.url)
@@ -195,12 +173,3 @@ if __name__ == '__main__':
     port = set_port(sys.argv[1])
     check_port_is_open(port)
     app.run(port = port)
-
-# link  = '127.0.0.1:4040/uploaded/' + filename
-# response = json.dumps( \
-# { \
-# 'status': 'ok', \
-# 'wav': filename, \
-# 'link': link \
-# }, \
-# sort_keys=True, indent=4)
