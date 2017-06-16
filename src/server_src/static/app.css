@@ -9,7 +9,7 @@ html, body {
 }
 
 body {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
   font-size: 0.8rem;
 }
 
@@ -21,7 +21,7 @@ body {
 
 h1, h2 {
   font-size: 2rem;
-  color: blue;
+  /*color: blue;*/
   text-align: center;
   font-weight: normal;
   padding: 0.5rem 0 0 0;
@@ -38,7 +38,7 @@ canvas {
   margin-bottom: 0.5rem;
 }
 
-#buttons {
+/*#buttons {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -46,7 +46,6 @@ canvas {
 
 #buttons button {
   font-size: 1rem;
-  padding: 1rem;
   width: 100%;
 }
 
@@ -57,8 +56,8 @@ button {
   color: white;
   border: none;
   transition: all 0.2s;
-  padding: 0.5rem;
-}
+  /*padding: 0.5rem;*/
+/*}
 
 button:hover, button:focus {
   box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1);
@@ -68,7 +67,7 @@ button:hover, button:focus {
 button:active {
   box-shadow: inset 0px 0px 20px rgba(0,0,0,0.5);
   transform: translateY(2px);
-}
+}*/
 
 
 /* Make the clips use as much space as possible, and
@@ -103,12 +102,6 @@ audio {
   float: right;
 }
 
-button.delete {
-  background: #f00;
-  padding: 0.5rem 0.75rem;
-  font-size: 0.8rem;
-}
-
 /* Checkbox hack to control information box display */
 
 label {
@@ -125,26 +118,6 @@ input[type=checkbox] {
    top: -100px;
 }
 
-aside {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  transform: translateX(100%);
-  transition: 0.3s all ease-out;
-  background-color: #efefef;
-  padding: 1rem;
-}
-
-aside p {
-  font-size: 1.2rem;
-  margin: 0.5rem 0;
-}
-
-aside a {
-  color: #666;
-}
 
 /* Toggled State of information box */
 input[type=checkbox]:checked ~ aside {
@@ -163,20 +136,30 @@ input[type=checkbox]:checked ~ aside {
      goes past a certain size */
   .wrapper {
     width: 40%;
+    padding: 10px;
     max-width: 1000px;
     margin: 0 auto;
   }
 }
 
 .elem_usr {
-  border: 1px solid grey;
+  /*border: 1px solid grey;*/
   padding: 10px;
   margin: 10px 0px 10px 0px;
   text-align: right;
+  font-size: 1rem;
 }
 
 .elem_machine {
-  border: 1px solid grey;
+  /*border: 1px solid grey;*/
   padding: 10px;
+  font-size: 1rem;
   margin: 10px 0px 10px 0px;
+}
+
+.time {
+  text-align: center;
+  font-style: italic;
+  color: grey;
+  margin-top: 40px;
 }

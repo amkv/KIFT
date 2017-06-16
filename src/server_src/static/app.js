@@ -19,23 +19,27 @@ function startUserMedia(stream) {
 
 function startRecording() {
   recorder.record();
-  $("#record").css("background-color","red");
+  $("#record").css("background-color","#ef5350");
+  // $("#record").addClass("waves-effect waves-light btn");
   $("#record").text("STOP");
 }
 
 function stopRecording() {
+  $('#record').text("Waiting for response");
+  $('#record').prop('disabled', true);
+
   recorder.stop();
-  $("#record").css("background-color","grey");
-  $('#result').text("Waiting for response");
-  $("#record").text("Record");
+  // $("#record").css("background-color","grey");
+  // $("#record").text("Record");
   POSTAudioRequest();
   recorder.clear();
+  // $("#record").text("Record");
 }
 
 function AddToConversation(json_object, from) {
   if (from == "user") {
 
-    var $div = $("<div>", {"class": "elem_usr"});
+    var $div = $("<div>", {"class": "elem_usr z-depth-2"});
     $div.prepend("You: " + json_object.text_input + "<p>");
     $("<audio></audio>").attr({
       'src':'/static/incoming/' + json_object.filePath_input,
@@ -45,8 +49,8 @@ function AddToConversation(json_object, from) {
   }
   if (from == "machine") {
 
-    var $div = $("<div>", {"class": "elem_machine"});
-    $div.prepend("Machine: " + json_object.text_output + "<p>");
+    var $div = $("<div>", {"class": "elem_machine z-depth-2"});
+    $div.prepend("BLA: " + json_object.text_output + "<p>");
     $("<audio></audio>").attr({
       'src':'/static/outgoing/' + json_object.filePath_output,
       'controls':'controls',
@@ -69,18 +73,26 @@ function POSTAudioRequest() {
       success: function(data) {
         var json_object = JSON.parse(data);
         console.log(json_object);
-        // console.log(json_object.text_output);
-        $('#result').text(json_object.text_output);
-        // $('#result').text(json_object.text_output);
-        $("#record").css("background-color","blue");
-        // $("#sound").attr("src", "/static/outgoing/" + json_object.filePath_output);
-        // $("#sound").attr("src", "/static/outgoing/" + json_object.filePath);
 
         AddToConversation(json_object, "user");
         AddToConversation(json_object, "machine");
+
+        var Hours = new Date().getHours();
+        var Seconds = new Date().getMinutes();
+
+        var $time = $("<p>TIME: " + Hours + ":" + Seconds + "<p>");
+        $time.addClass("time");
+        $("#conversation").prepend($time);
+        $('#record').prop('disabled', false);
+        $("#record").text("<i class=\"material-icons\">mic</i>");
+        $("#record").text("Record");
+        $("#record").css("background-color","#26a69a");
       },
       error: function() {
        console.log("Error");
+       $('#record').prop('disabled', false);
+       $("#record").text("Record");
+       $("#record").css("background-color","#26a69a");
      }
    });
    }
@@ -145,11 +157,11 @@ function visualize(stream) {
 
     analyser.getByteTimeDomainData(dataArray);
 
-    canvasCtx.fillStyle = 'rgb(200, 200, 200)';
+    canvasCtx.fillStyle = 'rgb(255, 255, 255)';
     canvasCtx.fillRect(0, 0, WIDTH, HEIGHT);
 
     canvasCtx.lineWidth = 2;
-    canvasCtx.strokeStyle = 'rgb(0, 0, 0)';
+    canvasCtx.strokeStyle = 'rgb(108, 115, 114)';
 
     canvasCtx.beginPath();
 

@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width">
     <title>Web dictaphone</title>
+    <!--Import Google Icon Font-->
+    <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="{{ url_for('static', filename="materialize.css") }}" media="screen,projection"/>
     <link href="{{ url_for('static', filename="app.css") }}" rel="stylesheet" type="text/css">
     <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
     <script>{{ interactive_js }}</script>
@@ -14,15 +18,12 @@
 
       <header>
         <h1>BLA (Best Lucky Assistant)</h1>
-        <!-- <audio src="" autoplay controls id="sound"></audio> -->
-
-         <!-- <h2>You said : <span id="result"></span></h2> -->
       </header>
 
       <section class="main-controls">
-        <canvas class="visualizer"></canvas>
+        <canvas class="visualizer z-depth-1"></canvas>
           <div id="buttons">
-          <button id="record">Record</button>
+          <button id="record" class="waves-effect waves-light btn"><i class="material-icons">mic</i> Record</button>
         </div>
 
       </section>
@@ -33,6 +34,7 @@
 
     <script src="{{ url_for('static', filename="app.js") }}"></script>
     <script src="{{ url_for('static', filename="recorder.js") }}"></script>
+    <script src="{{ url_for('static', filename="materialize.js") }}"></script>
 
   </body>
 </html>
