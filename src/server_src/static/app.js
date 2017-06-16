@@ -38,7 +38,7 @@ function AddToConversation(json_object, from) {
     var $div = $("<div>", {"class": "elem_usr"});
     $div.prepend("You: " + json_object.text_input + "<p>");
     $("<audio></audio>").attr({
-      'src':'/static/outgoing/' + json_object.filePath_input,
+      'src':'/static/incoming/' + json_object.filePath_input,
       'controls':'controls'
     }).appendTo($div);
 

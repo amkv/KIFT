@@ -5,6 +5,9 @@ import os
 from random import randrange
 import sys
 import shutil
+import socket
+
+DEBUG = False
 
 def new_voice(path, wavname):
     try:
@@ -26,11 +29,35 @@ def set_port(argv):
     else:
         return port
 
+def set_folder(path, folder):
+    """check folder, delete if exist"""
+    if os.path.exists(path + folder):
+        shutil.rmtree(path + folder)
+    os.mkdir(path + folder)
+    return path + folder
+
+def check_port_is_open(host, port):
+    """Check is socket port opened"""
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    result = sock.connect_ex((host, port))
+    if result == 0:
+        print "Port %(port)s is opened." % {'port': port}
+    else:
+        print "Port %(port)s is not opened." % {'port': port}
+        sys.exit(1)
+
+def print_debug(text):
+    global DEBUG
+    if DEBUG:
+        print (text)
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
         print_usage()
+    host = '127.0.0.1'
     port = set_port(sys.argv[1])
-    path = os.getcwd() + '/query/'
+    check_port_is_open(host, port)
+    path = set_folder(os.getcwd(), '/query/')
     wavname = str(randrange(1000, 3000))
     file = path + wavname + '.wav'
     while True:
@@ -38,30 +65,30 @@ if __name__ == "__main__":
         if len(text) < 1:
             try:
                 new_voice(path, wavname)
-                # print "> [file recorded]"
+                print_debug("> [file recorded]")
             except:
                 pass
-                # print("> [can't record voice]")
+                print_debug("> [can't record voice]")
             upload_url = 'http://127.0.0.1:' + str(port) + '/manual'
             file_ = {'file': (file, open(file, 'rb'))}
             try:
                 r = requests.post(upload_url, files=file_)
-                # print "> [requested]"
+                print_debug("> [requested]")
             except:
                 pass
-                print("> [can't send request to server]")
+                print_debug("> [can't send request to server]")
             try:
-                with open ('output_to_client.mp3', 'wb') as f:
+                with open (path + 'output_to_client.mp3', 'wb') as f:
                     f.write(r.content)
-                    # print "> [file created]"
+                    print_debug("> [file created]")
             except:
                 pass
                 # print("> [can't create file]")
             try:
-                os.system('play output_to_client.mp3')
-                # print "> [file played]"
+                os.system('play ' + path + 'output_to_client.mp3')
+                print_debug("> [file played]")
             except:
                 pass
-                # print "> [can't play file]"
+                print_debug("> [can't play file]")
         if '!' in text:
             break

@@ -7,14 +7,6 @@ import os
 
 from myserver import *
 
-# Constant variables
-
-
-# Folder for upload incoming wav files
-
-
-# SERVER_FOLDER = PATH + 'src/server_src/'
-
 # def save_to_log(text):
 #     global PATH
 #     global LOG_FOLDER
@@ -29,23 +21,21 @@ def set_folder(path, folder):
         shutil.rmtree(path + folder)
     os.mkdir(path + folder)
 
-# #######################################################################
-
 def main(argv):
     if len(argv) != 2:
         print_usage()
-    path = os.getcwd() + '/'
-    upload_folder = 'uploaded'
-    outgoing_folder = 'outgoing'
+    path = os.getcwd() + '/src/server_src/static/'
     log_folder = 'history'
     LOG_FILE = 'logs'
     host = '127.0.0.1'
-    # set_folder(path, upload_folder)
-    # set_folder(path, outgoing_folder)
+    incoming_folder = 'incoming'
+    outgoing_folder = 'outgoing'
+    set_folder(path, incoming_folder)
+    set_folder(path, outgoing_folder)
     # set_folder(path, log_folder)
     port = set_port(argv[1])
     check_port_is_open(host, port)
-    run_the_server(port, path, upload_folder, outgoing_folder)
+    run_the_server(port, path, incoming_folder, outgoing_folder)
 
 if __name__ == '__main__':
     main(sys.argv)

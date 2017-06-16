@@ -72,22 +72,17 @@ def submit():
     path = os.getcwd() + '/' + 'src/server_src/static'
     path_incoming = path + '/incoming/'
     path_outgoing = path + '/outgoing/'
-    print path_incoming
-    print path_outgoing
     file_name_incoming = str(randrange(1000, 3000)) + str(int(time.time())) + '.wav'
     file_name_outgoing = str(randrange(1000, 3000)) + str(int(time.time())) + '.mp3'
-    print file_name_incoming
-    print file_name_outgoing
     file_incoming = path_incoming + file_name_incoming
     file_outgoing = path_outgoing + file_name_outgoing
-    print file_incoming
-    print file_outgoing
     with open (file_incoming, 'wb') as f:
         f.write(request.data)
         f.close()
     data = {};
-    os.system('sox ' + file_incoming + ' -r 16000 ' + path_incoming + 'o_' + file_name_incoming )
-    output_from_bla = subprocess.check_output('./bla ' + file_incoming, shell=True)
+    os.system('sox ' + file_incoming + ' -r 16000 ' + path_incoming + 'o_' + file_name_incoming)
+    os.system('rm ' + file_incoming)
+    output_from_bla = subprocess.check_output('./bla ' + path_incoming + 'o_' + file_name_incoming, shell=True)
     text_output = actionParser(output_from_bla)
     if '(null)' in text_output:
         text_output
@@ -117,7 +112,7 @@ def upload_file():
             filename = secure_filename(file.filename)
             filename = str(randrange(1000, 3000)) + str(int(time.time()))
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-            return handler(filename, app.config['UPLOAD_FOLDER'], app.config['OUTGONING_FOLDER'])
+            return handler(filename, app.config['UPLOAD_FOLDER'], app.config['OUTGOING_FOLDER'])
     return '''
     <!doctype html>
     <title>KIFT server side</title>
@@ -128,7 +123,7 @@ def upload_file():
     </form>
     '''
 
-def run_the_server(port, path, uploaded_folder, outgoing_folder):
-    app.config['UPLOAD_FOLDER'] = path + uploaded_folder
-    app.config['OUTGONING_FOLDER'] = path + outgoing_folder
+def run_the_server(port, path, incoming_folder, outgoing_folder):
+    app.config['UPLOAD_FOLDER'] = path + incoming_folder
+    app.config['OUTGOING_FOLDER'] = path + outgoing_folder
     app.run(port = port)
