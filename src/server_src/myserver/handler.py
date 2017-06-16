@@ -7,6 +7,9 @@ from parser import *
 def handler(filename, UPLOAD_FOLDER, OUTGOING_FOLDER ):
     output_from_bla = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
     otgoing_audio = filename + '.mp3'
+    print ('-----------------------------------------------------------\n\n')
+    print(output_from_bla)
+    print ('-----------------------------------------------------------\n\n')
     # save_to_log(output_from_bla)
     text_to_client = actionParser(output_from_bla)
     tts = gTTS(text=text_to_client, lang='en')

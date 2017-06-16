@@ -10,7 +10,7 @@ import os
 import subprocess
 from myserver import *
 
-app = Flask(__name__, template_folder='../templates')
+app = Flask(__name__, template_folder='../templates', static_folder='../static')
 api = Api(app)
 ALLOWED_EXTENSIONS = set(['wav'])
 
@@ -27,17 +27,20 @@ def submit():
     # f = open(PATH + UPLOAD_FOLDER + '/' + "to_be_analized.wav", 'wb')
     # f.write(request.data)
     # f.close()
-    f = open('toto.wav', 'wb')
-    f.write(request.data)
-    f.close()
+    with open ('toto.wav', 'wb') as f:
+        f.write(request.data)
+        f.close()
+    # f = open('toto_1.wav', 'wb')
+    # f.write(request.data)
+    # f.close()
     data = {};
     # data['text'] = "salut asdfsdaf asdf  asdf"
 
-    os.system('sox toto.wav -r 16000 toto_converted.wav')
+    # os.system('sox toto.wav -r 16000 toto_conv_sox.wav')
     # os.system('ffmpeg -y -i toto.wav -f s16le -acodec pcm_s16le toto.pcm')
     # os.system('ffmpeg -y -f s16le -ar 44.1k -ac 1 -i toto.pcm toto.wav')
 
-    output_from_bla = subprocess.check_output('./bla toto_converted.wav', shell=True)
+    output_from_bla = subprocess.check_output('./bla toto.wav', shell=True)
     text_output = actionParser(output_from_bla)
 
     print("\n\n")
@@ -64,7 +67,30 @@ def submit():
     # return json_data
     return json_data
 
-@app.route('/test', methods=['GET', 'POST'])
+# @app.route('/submit', methods=['GET', 'POST'])
+# def submit():
+#     f = open('toto.wav', 'wb')
+#     f.write(request.data)
+#     f.close()
+#     data = {};
+#     os.system('sox toto.wav -r 16000 toto_converted.wav')
+#     output_from_bla = subprocess.check_output('./bla toto_converted.wav', shell=True)
+#     text_output = actionParser(output_from_bla)
+#     print ('-----------------------------------------------------------\n\n')
+#     print(output_from_bla)
+#     print ('-----------------------------------------------------------\n\n')
+#     data['filePath_input'] = "toto.wav"
+#     data['text_input'] = output_from_bla
+#     # ft_handler(text_input);
+#     file_name_output = str(randrange(1000, 3000)) + str(int(time.time())) + '.mp3'
+#     tts = gTTS(text=text_output, lang='en')
+#     tts.save("src/server_src/static/outgoing/" + file_name_output)
+#     data['filePath_output'] = file_name_output
+#     data['text_output'] = text_output
+#     json_data = json.dumps(data)
+#     return json_data
+
+@app.route('/manual', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
         if 'file' not in request.files:

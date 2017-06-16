@@ -67,6 +67,9 @@ def get_last_text(path, transcription):
     lines = file.readlines()
     if lines:
         last = lines[-1].partition('<s> ')[-1].rpartition(' </s>')[0]
+    else:
+        print('write some text before repeat it')
+        return None
     return last
 
 def main():
@@ -81,17 +84,25 @@ def main():
     create_file(path, transcription)
     create_file(path, fileids)
     counter = set_counter(path, fileids)
+    repeats = 1
     while True:
         text = raw_input('>')
         counter += 1
         if len(text) < 1:
             text = get_last_text(path, transcription)
+            if not text:
+                continue
+            repeats += 1
+        else:
+            repeats = 1
         if '!' in text:
             sys.exit(0)
             print('ok, exit')
         os.system('clear')
         print('----------------------------------------\n\n')
         print (text + '\n\n')
+        print('----------------------------------------\n')
+        print('|   ' + str(repeats))
         print('----------------------------------------\n')
         wavname = set_wavname(text, counter)
         append_to_transcription(path, transcription, text, wavname)

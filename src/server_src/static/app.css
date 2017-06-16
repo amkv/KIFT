@@ -171,7 +171,6 @@ input[type=checkbox]:checked ~ aside {
 .elem_usr {
   border: 1px solid grey;
   padding: 10px;
-  box-shadow: 1px 1px 5px 1px;
   margin: 10px 0px 10px 0px;
   text-align: right;
 }
@@ -179,6 +178,5 @@ input[type=checkbox]:checked ~ aside {
 .elem_machine {
   border: 1px solid grey;
   padding: 10px;
-  box-shadow: 1px 1px 5px 1px;
   margin: 10px 0px 10px 0px;
 }

@@ -8,7 +8,7 @@ import shutil
 
 def new_voice(path, wavname):
     try:
-        os.system('rec -r 16000 -e signed-integer -b 16 -c 1 %(path)s%(wavname)s.wav' % {'path' : path, 'wavname' : wavname})
+        os.system('rec -r 16k -e signed-integer -b 16 -c 1 %(path)s%(wavname)s.wav' % {'path' : path, 'wavname' : wavname})
     except:
         print('can\'t create %(path)s%(name)s' % {'wavname' : wavname, 'path' : path})
         sys.exit(0)
@@ -42,14 +42,14 @@ if __name__ == "__main__":
             except:
                 pass
                 # print("> [can't record voice]")
-            upload_url = 'http://127.0.0.1:' + str(port) + '/test'
+            upload_url = 'http://127.0.0.1:' + str(port) + '/manual'
             file_ = {'file': (file, open(file, 'rb'))}
             try:
                 r = requests.post(upload_url, files=file_)
                 # print "> [requested]"
             except:
                 pass
-                # print("> [can't send request to server]")
+                print("> [can't send request to server]")
             try:
                 with open ('output_to_client.mp3', 'wb') as f:
                     f.write(r.content)

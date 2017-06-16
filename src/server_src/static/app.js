@@ -20,7 +20,7 @@ function startUserMedia(stream) {
 function startRecording() {
   recorder.record();
   $("#record").css("background-color","red");
-  $("#record").text("stop");
+  $("#record").text("STOP");
 }
 
 function stopRecording() {
