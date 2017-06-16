@@ -1,0 +1,71 @@
+Language model created by QuickLM on Fri Jun 16 15:31:58 EDT 2017
+Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
+
+The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
+
+The code that was used to produce this language model is available in Open Source.
+Please visit http://www.speech.cs.cmu.edu/tools/ for more information
+
+The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
+This model based on a corpus of 10 sentences and 13 words
+
+\data\
+ngram 1=13
+ngram 2=21
+ngram 3=14
+
+\1-grams:
+-0.8325 </s> -0.3010
+-0.8325 <s> -0.2319
+-1.8325 ALARM -0.2319
+-1.8325 BROWSER -0.2319
+-1.8325 GOOGLE -0.2319
+-1.8325 HELLO -0.2319
+-1.8325 HI -0.2319
+-1.8325 JAZZ -0.2319
+-1.8325 MUSIC -0.2319
+-1.3554 PLAY -0.2167
+-1.8325 SEARCH -0.2319
+-1.5315 SET -0.2881
+-1.8325 TIMER -0.2319
+
+\2-grams:
+-1.3010 <s> BROWSER 0.0000
+-1.3010 <s> GOOGLE 0.0000
+-1.3010 <s> HELLO 0.0000
+-1.3010 <s> HI 0.0000
+-0.8239 <s> PLAY 0.0000
+-1.3010 <s> SEARCH 0.0000
+-1.0000 <s> SET 0.0000
+-0.3010 ALARM </s> -0.3010
+-0.3010 BROWSER </s> -0.3010
+-0.3010 GOOGLE </s> -0.3010
+-0.3010 HELLO </s> -0.3010
+-0.3010 HI </s> -0.3010
+-0.3010 JAZZ </s> -0.3010
+-0.3010 MUSIC </s> -0.3010
+-0.7782 PLAY </s> -0.3010
+-0.7782 PLAY JAZZ 0.0000
+-0.7782 PLAY MUSIC 0.0000
+-0.3010 SEARCH </s> -0.3010
+-0.6021 SET ALARM 0.0000
+-0.6021 SET TIMER 0.0000
+-0.3010 TIMER </s> -0.3010
+
+\3-grams:
+-0.3010 <s> BROWSER </s>
+-0.3010 <s> GOOGLE </s>
+-0.3010 <s> HELLO </s>
+-0.3010 <s> HI </s>
+-0.7782 <s> PLAY </s>
+-0.7782 <s> PLAY JAZZ
+-0.7782 <s> PLAY MUSIC
+-0.3010 <s> SEARCH </s>
+-0.6021 <s> SET ALARM
+-0.6021 <s> SET TIMER
+-0.3010 PLAY JAZZ </s>
+-0.3010 PLAY MUSIC </s>
+-0.3010 SET ALARM </s>
+-0.3010 SET TIMER </s>
+
+\end\

@@ -82,10 +82,15 @@ def submit():
     data = {};
     os.system('sox ' + file_incoming + ' -r 16000 ' + path_incoming + 'o_' + file_name_incoming)
     os.system('rm ' + file_incoming)
-    output_from_bla = subprocess.check_output('./bla ' + path_incoming + 'o_' + file_name_incoming, shell=True)
+    try:
+        output_from_bla = subprocess.check_output('./bla ' + path_incoming + 'o_' + file_name_incoming, shell=True)
+        output_from_bla = output_from_bla.lower()
+    except:
+        output_from_bla = '(null)'
+        print "bad result from bla"
     text_output = actionParser(output_from_bla)
-    if '(null)' in text_output:
-        text_output
+    # if '(null)' in text_output:
+    #     text_output = 'no'
     print ('-----------------------------------------------------------\n\n')
     print(output_from_bla)
     print ('-----------------------------------------------------------\n\n')

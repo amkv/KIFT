@@ -25,13 +25,27 @@ static cmd_ln_t		*ft_cmd_ln_init(void)
 
 	config = cmd_ln_init(NULL, ps_args(), TRUE,
 						"-hmm", MODELDIR "en-us-adapt",
-						"-lm", MODELDIR "en-us.lm.bin",
-						"-dict", MODELDIR "cmudict-en-us.dict",
+						"-lm", MODELDIR "commands/lm.lm",
+						"-dict", MODELDIR "commands/dic.dic",
 						NULL);
 	if (!config)
 		ft_error_exit("Failed to create config object");
 	return (config);
 }
+
+// static cmd_ln_t		*ft_cmd_ln_init(void)
+// {
+// 	cmd_ln_t		*config;
+//
+// 	config = cmd_ln_init(NULL, ps_args(), TRUE,
+// 						"-hmm", MODELDIR "en-us-adapt",
+// 						"-lm", MODELDIR "en-us.lm.bin",
+// 						"-dict", MODELDIR "cmudict-en-us.dict",
+// 						NULL);
+// 	if (!config)
+// 		ft_error_exit("Failed to create config object");
+// 	return (config);
+// }
 
 static void			ft_read_wav(char *argv, ps_decoder_t **ps)
 {
