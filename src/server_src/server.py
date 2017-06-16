@@ -40,9 +40,9 @@ def main(argv):
     log_folder = 'history'
     LOG_FILE = 'logs'
     host = '127.0.0.1'
-    set_folder(path, upload_folder)
-    set_folder(path, outgoing_folder)
-    set_folder(path, log_folder)
+    # set_folder(path, upload_folder)
+    # set_folder(path, outgoing_folder)
+    # set_folder(path, log_folder)
     port = set_port(argv[1])
     check_port_is_open(host, port)
     run_the_server(port, path, upload_folder, outgoing_folder)

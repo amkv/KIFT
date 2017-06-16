@@ -3,7 +3,6 @@ from gtts import gTTS
 from flask import Flask, make_response
 from parser import *
 
-
 def handler(filename, UPLOAD_FOLDER, OUTGOING_FOLDER ):
     output_from_bla = subprocess.check_output('./bla %(UPLOAD_FOLDER)s/%(filename)s' % {'UPLOAD_FOLDER': UPLOAD_FOLDER, 'filename': filename}, shell=True)
     otgoing_audio = filename + '.mp3'
