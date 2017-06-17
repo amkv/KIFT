@@ -1,10 +1,27 @@
 hello
 hi
 browser
-set timer
-set alarm
+timer
+set
+alarm
 search
+the
+web
+an
 play
-play music
-play jazz
+music
+jazz
 google
+tell
+me
+a
+joke
+what
+is
+forty
+two
+time
+open
+weather
+today
+brightness

@@ -1,4 +1,4 @@
-Language model created by QuickLM on Fri Jun 16 15:31:58 EDT 2017
+Language model created by QuickLM on Fri Jun 16 17:13:56 EDT 2017
 Copyright (c) 1996-2010 Carnegie Mellon University and Alexander I. Rudnicky
 
 The model is in standard ARPA format, designed by Doug Paul while he was at MITRE.
@@ -7,65 +7,127 @@ The code that was used to produce this language model is available in Open Sourc
 Please visit http://www.speech.cs.cmu.edu/tools/ for more information
 
 The (fixed) discount mass is 0.5. The backoffs are computed using the ratio method.
-This model based on a corpus of 10 sentences and 13 words
+This model based on a corpus of 27 sentences and 29 words
 
 \data\
-ngram 1=13
-ngram 2=21
-ngram 3=14
+ngram 1=29
+ngram 2=54
+ngram 3=27
 
 \1-grams:
--0.8325 </s> -0.3010
--0.8325 <s> -0.2319
--1.8325 ALARM -0.2319
--1.8325 BROWSER -0.2319
--1.8325 GOOGLE -0.2319
--1.8325 HELLO -0.2319
--1.8325 HI -0.2319
--1.8325 JAZZ -0.2319
--1.8325 MUSIC -0.2319
--1.3554 PLAY -0.2167
--1.8325 SEARCH -0.2319
--1.5315 SET -0.2881
--1.8325 TIMER -0.2319
+-0.7782 </s> -0.3010
+-0.7782 <s> -0.2218
+-2.2095 A -0.2218
+-2.2095 ALARM -0.2218
+-2.2095 AN -0.2218
+-2.2095 BRIGHTNESS -0.2218
+-2.2095 BROWSER -0.2218
+-2.2095 FORTY -0.2218
+-2.2095 GOOGLE -0.2218
+-2.2095 HELLO -0.2218
+-2.2095 HI -0.2218
+-2.2095 IS -0.2218
+-2.2095 JAZZ -0.2218
+-2.2095 JOKE -0.2218
+-2.2095 ME -0.2218
+-2.2095 MUSIC -0.2218
+-2.2095 OPEN -0.2218
+-2.2095 PLAY -0.2218
+-2.2095 SEARCH -0.2218
+-2.2095 SET -0.2218
+-2.2095 TELL -0.2218
+-2.2095 THE -0.2218
+-2.2095 TIME -0.2218
+-2.2095 TIMER -0.2218
+-2.2095 TODAY -0.2218
+-2.2095 TWO -0.2218
+-2.2095 WEATHER -0.2218
+-2.2095 WEB -0.2218
+-2.2095 WHAT -0.2218
 
 \2-grams:
--1.3010 <s> BROWSER 0.0000
--1.3010 <s> GOOGLE 0.0000
--1.3010 <s> HELLO 0.0000
--1.3010 <s> HI 0.0000
--0.8239 <s> PLAY 0.0000
--1.3010 <s> SEARCH 0.0000
--1.0000 <s> SET 0.0000
+-1.7324 <s> A 0.0000
+-1.7324 <s> ALARM 0.0000
+-1.7324 <s> AN 0.0000
+-1.7324 <s> BRIGHTNESS 0.0000
+-1.7324 <s> BROWSER 0.0000
+-1.7324 <s> FORTY 0.0000
+-1.7324 <s> GOOGLE 0.0000
+-1.7324 <s> HELLO 0.0000
+-1.7324 <s> HI 0.0000
+-1.7324 <s> IS 0.0000
+-1.7324 <s> JAZZ 0.0000
+-1.7324 <s> JOKE 0.0000
+-1.7324 <s> ME 0.0000
+-1.7324 <s> MUSIC 0.0000
+-1.7324 <s> OPEN 0.0000
+-1.7324 <s> PLAY 0.0000
+-1.7324 <s> SEARCH 0.0000
+-1.7324 <s> SET 0.0000
+-1.7324 <s> TELL 0.0000
+-1.7324 <s> THE 0.0000
+-1.7324 <s> TIME 0.0000
+-1.7324 <s> TIMER 0.0000
+-1.7324 <s> TODAY 0.0000
+-1.7324 <s> TWO 0.0000
+-1.7324 <s> WEATHER 0.0000
+-1.7324 <s> WEB 0.0000
+-1.7324 <s> WHAT 0.0000
+-0.3010 A </s> -0.3010
 -0.3010 ALARM </s> -0.3010
+-0.3010 AN </s> -0.3010
+-0.3010 BRIGHTNESS </s> -0.3010
 -0.3010 BROWSER </s> -0.3010
+-0.3010 FORTY </s> -0.3010
 -0.3010 GOOGLE </s> -0.3010
 -0.3010 HELLO </s> -0.3010
 -0.3010 HI </s> -0.3010
+-0.3010 IS </s> -0.3010
 -0.3010 JAZZ </s> -0.3010
+-0.3010 JOKE </s> -0.3010
+-0.3010 ME </s> -0.3010
 -0.3010 MUSIC </s> -0.3010
--0.7782 PLAY </s> -0.3010
--0.7782 PLAY JAZZ 0.0000
--0.7782 PLAY MUSIC 0.0000
+-0.3010 OPEN </s> -0.3010
+-0.3010 PLAY </s> -0.3010
 -0.3010 SEARCH </s> -0.3010
--0.6021 SET ALARM 0.0000
--0.6021 SET TIMER 0.0000
+-0.3010 SET </s> -0.3010
+-0.3010 TELL </s> -0.3010
+-0.3010 THE </s> -0.3010
+-0.3010 TIME </s> -0.3010
 -0.3010 TIMER </s> -0.3010
+-0.3010 TODAY </s> -0.3010
+-0.3010 TWO </s> -0.3010
+-0.3010 WEATHER </s> -0.3010
+-0.3010 WEB </s> -0.3010
+-0.3010 WHAT </s> -0.3010
 
 \3-grams:
+-0.3010 <s> A </s>
+-0.3010 <s> ALARM </s>
+-0.3010 <s> AN </s>
+-0.3010 <s> BRIGHTNESS </s>
 -0.3010 <s> BROWSER </s>
+-0.3010 <s> FORTY </s>
 -0.3010 <s> GOOGLE </s>
 -0.3010 <s> HELLO </s>
 -0.3010 <s> HI </s>
--0.7782 <s> PLAY </s>
--0.7782 <s> PLAY JAZZ
--0.7782 <s> PLAY MUSIC
+-0.3010 <s> IS </s>
+-0.3010 <s> JAZZ </s>
+-0.3010 <s> JOKE </s>
+-0.3010 <s> ME </s>
+-0.3010 <s> MUSIC </s>
+-0.3010 <s> OPEN </s>
+-0.3010 <s> PLAY </s>
 -0.3010 <s> SEARCH </s>
--0.6021 <s> SET ALARM
--0.6021 <s> SET TIMER
--0.3010 PLAY JAZZ </s>
--0.3010 PLAY MUSIC </s>
--0.3010 SET ALARM </s>
--0.3010 SET TIMER </s>
+-0.3010 <s> SET </s>
+-0.3010 <s> TELL </s>
+-0.3010 <s> THE </s>
+-0.3010 <s> TIME </s>
+-0.3010 <s> TIMER </s>
+-0.3010 <s> TODAY </s>
+-0.3010 <s> TWO </s>
+-0.3010 <s> WEATHER </s>
+-0.3010 <s> WEB </s>
+-0.3010 <s> WHAT </s>
 
 \end\

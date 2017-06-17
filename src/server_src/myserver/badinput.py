@@ -1,3 +1,6 @@
+#! /usr/bin/python
+# -*- coding: utf-8 -*-
+
 import random
 
 def badinput():
@@ -6,7 +9,7 @@ def badinput():
     'NO!',
     'Sorry',
     'Marry me first!',
-    'I am too lasy today',
+    'I am too lazy today',
     'Boring...',
     'Go away!',
     'Try again',
