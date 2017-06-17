@@ -18,13 +18,13 @@ def new_voice(path, wavname):
 
 def print_usage():
     """show usage and exit"""
-    print ('usage: client.py <port number>')
+    print ('usage: client.py <port number 1000 - 65535>')
     sys.exit(0)
 
 def set_port(argv):
     """convert argument, check number in range, return port"""
     port = int(argv)
-    if port <= 100 or port >= 65535:
+    if port <= 1000 or port >= 65535:
         print_usage()
     else:
         return port
@@ -83,7 +83,7 @@ if __name__ == "__main__":
                     print_debug("> [file created]")
             except:
                 pass
-                # print("> [can't create file]")
+                print_debug("> [can't create file]")
             try:
                 os.system('play ' + path + 'output_to_client.mp3')
                 print_debug("> [file played]")

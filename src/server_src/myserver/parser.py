@@ -10,6 +10,7 @@ import random
 from time import gmtime, strftime
 from alarm import *
 from text2int import *
+from setdate import *
 
 def actionParser(text):
     text = text2int(text).strip()
@@ -27,7 +28,6 @@ def actionParser(text):
         secure_random = random.SystemRandom()
         return secure_random.choice(hello)
 
-
     elif 'play' in string[0] or 'music' in string[0] or 'jazz' in string[0]:
         webbrowser.open('file://' + os.getcwd() + "/src/server_src/data/strange_fruit.mp3")
         return "OK";
@@ -41,14 +41,20 @@ def actionParser(text):
         return secure_random.choice(jokes)
 
     elif 'what' in string[0]:
-        if "forty" in string and "two" in string:
+        if "40" in string or "2" in string or "42" in string:
             return "Forty two is an innovative coding college producing the next generation of software engineers and programmers"
 
         elif "time" in string:
-            ret = "Time is" + strftime(" %H:%M %p")
-            return ret
+            return "Time is" + strftime(" %H:%M %p")
+
+        elif "today" in string:
+            return "Today is " + set_date()
+
+        elif "weather" in string:
+            webbrowser.open('https://www.google.com/search?q=weather+in+fremont&oq=weather+in+fremont')
+            return "Today is a good day, Don't you think so"
         else:
-            return badinput()
+            return "What what?"
 
     elif 'google' in string[0]:
         if len(string) <= 1:
@@ -65,29 +71,18 @@ def actionParser(text):
          return ("I like California style")
 
     elif 'no' in string[0] and 'voice' in string[1]:
-        return "You did not say anything. Sometimes it's better to be silent"
-
-# ###################################################################
+        return "Sometimes it's better to be silent"
 
     elif 'set' in string[0]:
         if len(string) <= 1:
             return "Nothing to set";
         if 'alarm' in string[1] or 'timer' in string[1]:
-            second = timeParser(text)
-            if second > 0:
-                runTimer(second)
-            else:
-                return "Bad timer"
-            return "Timer was set";
+            second = 180
+            runTimer(second)
+            return "Your eggs will be ready in EXACTLY three minutes";
         else:
             return "Nothing to set"
 
-    # elif text.find("open") != -1 and text.find("browser") != -1:
-    #     webbrowser.open('http://ya.ru')
-    #     return "Browser was open"
-
-    # elif text.find("search") != -1 and text.find("web") != -1:
-    #     webbrowser.open('https://www.google.com/webhp#q=%s' % text[8:])
-    #     return "Google search done"
+# ###################################################################
 
     return badinput()

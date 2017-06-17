@@ -9,7 +9,6 @@ html, body {
 }
 
 body {
-  /*font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
   font-size: 0.8rem;
 }
 
@@ -38,41 +37,6 @@ canvas {
   margin-bottom: 0.5rem;
 }
 
-/*#buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-#buttons button {
-  font-size: 1rem;
-  width: 100%;
-}
-
-button {
-  font-size: 1rem;
-  background: #0088cc;
-  text-align: center;
-  color: white;
-  border: none;
-  transition: all 0.2s;
-  /*padding: 0.5rem;*/
-/*}
-
-button:hover, button:focus {
-  box-shadow: inset 0px 0px 10px rgba(255, 255, 255, 1);
-  background: #0ae;
-}
-
-button:active {
-  box-shadow: inset 0px 0px 20px rgba(0,0,0,0.5);
-  transform: translateY(2px);
-}*/
-
-
-/* Make the clips use as much space as possible, and
- * also show a scrollbar when there are too many clips to show
- * in the available space */
 .sound-clips {
   flex: 1;
   overflow: auto;
@@ -102,8 +66,6 @@ audio {
   float: right;
 }
 
-/* Checkbox hack to control information box display */
-
 label {
   font-size: 3rem;
   position: absolute;
@@ -118,22 +80,15 @@ input[type=checkbox] {
    top: -100px;
 }
 
-
-/* Toggled State of information box */
 input[type=checkbox]:checked ~ aside {
   transform: translateX(0);
 }
-
-/* Cursor when clip name is clicked over */
 
 .clip p {
   cursor: pointer;
 }
 
-/* Adjustments for wider screens */
 @media all and (min-width: 800px) {
-  /* Don't take all the space as readability is lost when line length
-     goes past a certain size */
   .wrapper {
     width: 40%;
     padding: 10px;
@@ -143,7 +98,6 @@ input[type=checkbox]:checked ~ aside {
 }
 
 .elem_usr {
-  /*border: 1px solid grey;*/
   padding: 10px;
   margin: 10px 0px 10px 0px;
   text-align: right;
@@ -151,7 +105,6 @@ input[type=checkbox]:checked ~ aside {
 }
 
 .elem_machine {
-  /*border: 1px solid grey;*/
   padding: 10px;
   font-size: 1rem;
   margin: 10px 0px 10px 0px;

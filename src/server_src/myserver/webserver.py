@@ -45,6 +45,8 @@ def submit():
         print "bad result from bla"
     if '(null)' in output_from_bla:
         output_from_bla = 'no voice'
+    elif len(output_from_bla) == 0:
+        output_from_bla = 'no voice'
     text_output = actionParser(output_from_bla)
 
     print ('-----------------------------------------------------------\n\n')

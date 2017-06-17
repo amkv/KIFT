@@ -1,10 +1,11 @@
 import socket
 import sys
+from print_usage import *
 
 def set_port(argv):
     """convert argument, check number in range, return port"""
     port = int(argv)
-    if port <= 100 or port >= 65535:
+    if port <= 1000 or port >= 65535:
         print_usage()
     else:
         return port

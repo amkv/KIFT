@@ -9,8 +9,10 @@ def handler(filename, UPLOAD_FOLDER, OUTGOING_FOLDER ):
     except:
         output_from_bla = '(null)'
     otgoing_audio = filename + '.mp3'
-    print ('-----------------------------------------------------------\n\n')
-    print(output_from_bla)
+    output_from_bla = output_from_bla.lower()
+    output_from_bla = output_from_bla.strip()
+    print ('\n-----------------------------------------------------------\n\n')
+    print("'" + output_from_bla + "'")
     print ('-----------------------------------------------------------\n\n')
     text_to_client = actionParser(output_from_bla)
     tts = gTTS(text=text_to_client, lang='en')

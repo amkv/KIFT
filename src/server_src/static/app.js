@@ -1,13 +1,8 @@
 var audio_context;
-
 var recording = false;
-
 var canvas = document.querySelector('.visualizer');
-
 var audioCtx = new (window.AudioContext || webkitAudioContext)();
 var canvasCtx = canvas.getContext("2d");
-
-
 
 function startUserMedia(stream) {
   var input = audio_context.createMediaStreamSource(stream);
@@ -20,20 +15,15 @@ function startUserMedia(stream) {
 function startRecording() {
   recorder.record();
   $("#record").css("background-color","#ef5350");
-  // $("#record").addClass("waves-effect waves-light btn");
   $("#record").text("STOP");
 }
 
 function stopRecording() {
   $('#record').text("Waiting for response");
   $('#record').prop('disabled', true);
-
   recorder.stop();
-  // $("#record").css("background-color","grey");
-  // $("#record").text("Record");
   POSTAudioRequest();
   recorder.clear();
-  // $("#record").text("Record");
 }
 
 function AddToConversation(json_object, from) {
@@ -116,7 +106,6 @@ window.onload = function init() {
     }
   });
   try {
-    // webkit shim
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia;
     window.URL = window.URL || window.webkitURL;
@@ -133,8 +122,6 @@ window.onload = function init() {
   });
 };
 
-
-// Nice to have, voice visualisation
 function visualize(stream) {
   var source = audioCtx.createMediaStreamSource(stream);
 
@@ -144,7 +131,6 @@ function visualize(stream) {
   var dataArray = new Uint8Array(bufferLength);
 
   source.connect(analyser);
-  //analyser.connect(audioCtx.destination);
 
   WIDTH = canvas.width
   HEIGHT = canvas.height;
@@ -167,7 +153,6 @@ function visualize(stream) {
 
     var sliceWidth = WIDTH * 1.0 / bufferLength;
     var x = 0;
-
 
     for(var i = 0; i < bufferLength; i++) {
 

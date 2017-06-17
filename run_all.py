@@ -11,14 +11,14 @@ URL = 'http://127.0.0.1'
 def set_port(argv):
     """convert argument, check number in range, return port"""
     port = int(argv)
-    if port <= 100 or port >= 65535:
+    if port <= 1000 or port >= 65535:
         print_usage()
     else:
         return port
 
 def print_usage():
     """show usage and exit"""
-    print ('usage: runner.py <port number>')
+    print ('usage: runner.py <port number 1000 - 65535>')
     sys.exit(0)
 
 def main(argv):
