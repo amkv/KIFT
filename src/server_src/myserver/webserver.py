@@ -9,6 +9,7 @@ import random
 import os
 import subprocess
 from myserver import *
+from history import *
 
 app = Flask(__name__, template_folder='../templates', static_folder='../static')
 api = Api(app)
@@ -32,7 +33,6 @@ def submit():
     file_outgoing = path_outgoing + file_name_outgoing
     with open (file_incoming, 'wb') as f:
         f.write(request.data)
-        f.close()
     data = {};
     os.system('sox ' + file_incoming + ' -r 16000 ' + path_incoming + 'o_' + file_name_incoming)
     os.system('rm ' + file_incoming)
@@ -59,6 +59,7 @@ def submit():
     data['filePath_output'] = file_name_outgoing
     data['text_output'] = text_output
     json_data = json.dumps(data)
+    add_to_history(path, output_from_bla, text_output)
     return json_data
 
 @app.route('/manual', methods=['GET', 'POST'])

@@ -12,6 +12,7 @@ def del_folder(folder):
 def main():
     incoming_folder = 'incoming'
     outgoing_folder = 'outgoing'
+    history_folder = 'history'
     train_folder = 'train'
     query_folder = 'query'
 
@@ -22,13 +23,16 @@ def main():
 
     incoming = path + path_static + incoming_folder
     outgoing = path + path_static + outgoing_folder
+    history = path + path_static + history_folder
     train = path + path_train + train_folder
     query = path + path_query + query_folder
 
     del_folder(incoming)
     del_folder(outgoing)
+    del_folder(history)
     del_folder(train)
     del_folder(query)
+
     os.system('make fclean')
 
 if __name__ == "__main__":

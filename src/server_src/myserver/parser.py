@@ -52,7 +52,7 @@ def actionParser(text):
 
         elif "weather" in string:
             webbrowser.open('https://www.google.com/search?q=weather+in+fremont&oq=weather+in+fremont')
-            return "Today is a good day, Don't you think so"
+            return "Today is a good day, Don't you think so?"
         else:
             return "What what?"
 

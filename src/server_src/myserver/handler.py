@@ -2,6 +2,7 @@ import subprocess
 from gtts import gTTS
 from flask import Flask, make_response
 from parser import *
+from history import *
 
 def handler(filename, UPLOAD_FOLDER, OUTGOING_FOLDER ):
     try:
@@ -20,4 +21,6 @@ def handler(filename, UPLOAD_FOLDER, OUTGOING_FOLDER ):
     response = make_response(open(OUTGOING_FOLDER + '/' + otgoing_audio).read())
     response.headers['Content-Type'] = 'audio/mp3'
     response.headers['Content-Disposition'] = 'attachment; filename=' + otgoing_audio
+    path = os.getcwd() + '/' + 'src/server_src/static'
+    add_to_history(path, output_from_bla, text_to_client)
     return response
