@@ -1,11 +1,10 @@
 *.o
-kift
 bla
-client
-server
-*.a
 cmake-build-debug/
-outgoing
-uploaded
 *.DS_Store
 *.pyc
+CMakeLists.txt
+README.md
+temp/
+.idea/
+

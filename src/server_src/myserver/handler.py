@@ -12,7 +12,6 @@ def handler(filename, UPLOAD_FOLDER, OUTGOING_FOLDER ):
     print ('-----------------------------------------------------------\n\n')
     print(output_from_bla)
     print ('-----------------------------------------------------------\n\n')
-    # save_to_log(output_from_bla)
     text_to_client = actionParser(output_from_bla)
     tts = gTTS(text=text_to_client, lang='en')
     tts.save(OUTGOING_FOLDER + '/' + otgoing_audio)

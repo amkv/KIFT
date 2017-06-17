@@ -7,14 +7,6 @@ import os
 
 from myserver import *
 
-# def save_to_log(text):
-#     global PATH
-#     global LOG_FOLDER
-#     global LOG_FILE
-#     logfile = open(PATH + LOG_FOLDER + '/' + LOG_FILE, 'a')
-#     logfile.write(text)
-#     logfile.close()
-
 def set_folder(path, folder):
     """check folder, delete if exist"""
     if os.path.exists(path + folder):
@@ -32,7 +24,6 @@ def main(argv):
     outgoing_folder = 'outgoing'
     set_folder(path, incoming_folder)
     set_folder(path, outgoing_folder)
-    # set_folder(path, log_folder)
     port = set_port(argv[1])
     check_port_is_open(host, port)
     run_the_server(port, path, incoming_folder, outgoing_folder)

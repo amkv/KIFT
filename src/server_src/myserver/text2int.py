@@ -22,8 +22,6 @@ def text2int (textnum, numwords={}):
     ordinal_words = {'first':1, 'second':2, 'third':3, 'fifth':5, 'eighth':8, 'ninth':9, 'twelfth':12}
     ordinal_endings = [('ieth', 'y'), ('th', '')]
 
-    # textnum = textnum.replace('-', ' ')
-
     current = result = 0
     curstring = ""
     onnumber = False

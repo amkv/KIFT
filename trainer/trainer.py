@@ -78,7 +78,7 @@ def main():
     path = folder + '/'
     transcription = 'text.transcription'
     fileids = 'text.fileids'
-    print('trainer v0.1')
+    print('trainer v0.2')
     print('-----------------------------------------')
     create_folder(folder)
     create_file(path, transcription)

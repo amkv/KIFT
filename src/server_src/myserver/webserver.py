@@ -20,52 +20,6 @@ def allowed_file(filename):
 @app.route('/')
 def upload(my_callback=None):
     return render_template("upload.html", my_callback="hello")
-    # return 'ok'
-
-# @app.route('/submit', methods=['GET', 'POST'])
-# def submit():
-#     # f = open(PATH + UPLOAD_FOLDER + '/' + "to_be_analized.wav", 'wb')
-#     # f.write(request.data)
-#     # f.close()
-#     with open ('toto.wav', 'wb') as f:
-#         f.write(request.data)
-#         f.close()
-#     # f = open('toto_1.wav', 'wb')
-#     # f.write(request.data)
-#     # f.close()
-#     data = {};
-#     # data['text'] = "salut asdfsdaf asdf  asdf"
-#
-#     # os.system('sox toto.wav -r 16000 toto_conv_sox.wav')
-#     # os.system('ffmpeg -y -i toto.wav -f s16le -acodec pcm_s16le toto.pcm')
-#     # os.system('ffmpeg -y -f s16le -ar 44.1k -ac 1 -i toto.pcm toto.wav')
-#
-#     output_from_bla = subprocess.check_output('./bla toto.wav', shell=True)
-#     text_output = actionParser(output_from_bla)
-#
-#     print("\n\n")
-#     print(output_from_bla)
-#     # otgoing_audio = filename + '.mp3'
-#     # text_to_client = parser(output_from_bla)
-#     data['filePath_input'] = "toto.wav"
-#     data['text_input'] = output_from_bla
-#
-#     # ft_handler(text_input);
-#
-#     file_name_output = str(randrange(1000, 3000)) + str(int(time.time())) + '.mp3'
-#
-#     tts = gTTS(text=text_output, lang='en')
-#     tts.save("src/server_src/static/outgoing/" + file_name_output)
-#
-#
-#     # json = ft_action(data['filePath_input'])
-#     data['filePath_output'] = file_name_output
-#     data['text_output'] = text_output
-#
-#     json_data = json.dumps(data)
-#
-#     # return json_data
-#     return json_data
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
@@ -85,14 +39,16 @@ def submit():
     try:
         output_from_bla = subprocess.check_output('./bla ' + path_incoming + 'o_' + file_name_incoming, shell=True)
         output_from_bla = output_from_bla.lower()
+        output_from_bla = output_from_bla.strip()
     except:
-        output_from_bla = '(null)'
+        output_from_bla = 'no voice'
         print "bad result from bla"
+    if '(null)' in output_from_bla:
+        output_from_bla = 'no voice'
     text_output = actionParser(output_from_bla)
-    # if '(null)' in text_output:
-    #     text_output = 'no'
+
     print ('-----------------------------------------------------------\n\n')
-    print(output_from_bla)
+    print('\'' + output_from_bla + '\'')
     print ('-----------------------------------------------------------\n\n')
     data['filePath_input'] = 'o_' + file_name_incoming
     data['text_input'] = output_from_bla

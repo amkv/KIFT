@@ -1,4 +1,5 @@
 import webbrowser
+from text2int import *
 
 def timeParser(text):
     string = iter(text2int(text).split(' '))
@@ -27,4 +28,3 @@ def runAlarm(second):
     curTime = datetime.now()
     print curTime
     type(curTime)
-    #.strftime('%Y-%m-%d %H:%M:%S')

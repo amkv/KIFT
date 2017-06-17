@@ -45,7 +45,7 @@ def main(argv):
     time.sleep(1)
     try:
         webbrowser.open_new_tab(str(URL) + ':' + str(port) + '')
-        # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '/test')
+        # webbrowser.open_new_tab(str(URL) + ':' + str(port) + '/manual')
         pass
     except:
         sys.exit(1)

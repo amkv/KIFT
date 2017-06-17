@@ -10,7 +10,7 @@
 #                                                                              #
 # **************************************************************************** #
 
-.PHONY: all clean fclean re c
+.PHONY: all clean fclean re
 
 NAME = bla
 SRCF = src/
@@ -51,11 +51,5 @@ fclean:
 	@$(RMF) $(PRJBLA)/$(OFILES)
 	@$(RMF) $(NAME)
 	@echo "$(WHT)fcleaned$(CLN)"
-
-c:
-	# @$(RMF) $(PRJBLA)/$(OFILES)
-	# @$(RMF) $(NAME)
-	# @make $(NAME)
-	# @echo "$(WHT)done$(CLN)"
 
 re: fclean all
